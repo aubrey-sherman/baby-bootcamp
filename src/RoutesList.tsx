@@ -3,8 +3,8 @@ import NavBar from "./NavBar.tsx";
 import Home from "./Home.tsx";
 import Eat from "./Eat.tsx";
 import Sleep from "./Sleep.tsx";
-import LoginForm from "./LoginForm.tsx";
-import RegisterForm from "./RegisterForm.tsx";
+import LoginForm from './LoginForm.tsx';
+import RegisterForm from './RegisterForm.tsx';
 
 /** Routes for Baby App
  *
@@ -22,11 +22,11 @@ function RoutesList() {
   return (
     <div className="RoutesList">
       <BrowserRouter>
-        /* <NavBar /> */
+        <NavBar />
         <Routes>
-          <Route path="eat" element={<Eat />} />
-          <Route path="sleep" element={<Sleep />} />
-          <Route path="home" element={<Home />} />
+          <Route path="/eat" element={<Eat />} />
+          <Route path="/sleep" element={<Sleep />} />
+          <Route path="/" element={<Home />} />
           {/* Choice: Include a NotFound/404 component or redirect */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
