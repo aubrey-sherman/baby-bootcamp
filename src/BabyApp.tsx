@@ -1,7 +1,13 @@
+import RoutesList from './RoutesList.tsx';
+
 function BabyApp() {
   console.log("* BabyApp");
 
-  return <p>Baby Bootcamp</p>
+  return (
+    <div className="BabyApp">
+      <RoutesList />
+    </div>
+  )
 
 }
 
