@@ -11,26 +11,26 @@ import './App.css';
 */
 
 function App() {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
 
-  function incrCount() {
-    setCount(count => count + 1);
-  }
+  // function incrCount() {
+  //   setCount(count => count + 1);
+  // }
 
   return (
     <div className="App">
       <main>
-        <img src={logo} className="App-logo" alt="Rithm" />
-        <h1>Rithm React Starter</h1>
+        {/* <img src={logo} className="App-logo" alt="Rithm" /> */}
+        <h1>Baby Bootcamp</h1>
         <p>
-          <button
+          {/* <button
               className="btn btn-primary"
               onClick={incrCount}>
             Clicked: {count}
-          </button>
+          </button> */}
         </p>
         <p>
-          Edit <code>src/App.jsx</code>
+          {/* Edit <code>src/App.jsx</code> */}
         </p>
       </main>
     </div>
