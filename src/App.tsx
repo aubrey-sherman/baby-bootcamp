@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import logo from './logo.svg'
+// import { useState } from 'react';
+// import logo from './logo.svg'
 import './App.css';
 
 
@@ -21,7 +21,7 @@ function App() {
     <div className="App">
       <main>
         {/* <img src={logo} className="App-logo" alt="Rithm" /> */}
-        <h1>Baby Bootcamp</h1>
+        <h1>Baby Bootcamp 👶🏻 🍼 🧸 💤  🗓️</h1>
         <p>
           {/* <button
               className="btn btn-primary"
