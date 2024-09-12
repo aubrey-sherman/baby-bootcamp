@@ -37,13 +37,23 @@ class BabyBootcampAPI {
 
   // Individual API routes
 
-  /** Get the current user. */
-
-  /** Get current user's feeding entries. */
+  /** Get current user's feeding entries by user ID. */
+  static async userEntries(userId) {
+    let res = await this.request(`eat/${userId}`)
+    return res.userEntries;
+  }
 
   /** Create a new feeding entry. */
+  static async createEntry(createdData) {
+    let res = await this.request(`/eat`, data, "POST");
+    // FIXME: update what is returned
+    return res;
+  }
 
   /** Update an existing feeding entry. */
+  static async updateEntry(entryId, updatedData) {
+    let res = await this.request(`eat/`, updatedData, "PATCH");
+  }
 
 }
 
