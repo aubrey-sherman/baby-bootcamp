@@ -4,8 +4,10 @@ function Eat() {
   console.log("* Eat")
 
   return (
+    <div className="Eat">
     <p>Eat</p>
-    // Render Calendar component, which has individual calendar cell components
+    <Calendar />
+    </div>
   )
 }
 
