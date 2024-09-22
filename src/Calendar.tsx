@@ -1,3 +1,4 @@
+import CalendarCell from "./CalendarCell.tsx";
 
 /** Calendar component.
  *
@@ -9,10 +10,13 @@ function Calendar() {
   console.log("* Calendar")
 
   return (
+    <div className="Calendar">
     <p>Feeding Calendar</p>
+    <CalendarCell />
+    </div>
+
+
   )
 }
-
-// TODO: Day component (like Productiv to-do), which can render the update form
 
 export default Calendar;
