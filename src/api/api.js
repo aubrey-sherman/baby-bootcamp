@@ -38,8 +38,8 @@ class BabyBootcampAPI {
   // Individual API routes
 
   /** Get current user's feeding entries by username. */
-  static async userEntries(userId) {
-    let res = await this.request(`eat/${userId}`)
+  static async userEntries(username) {
+    let res = await this.request(`eat/${username}`)
     return res.userEntries;
   }
 
@@ -55,6 +55,37 @@ class BabyBootcampAPI {
     let res = await this.request(`eat/`, updatedData, "PATCH");
   }
 
+  /**  Register a user with data from sign up form. Returns a token on success. */
+  static async registerUser({ username, password, firstName, lastName, email }) {
+    let res = await this.request('auth/register', {
+      username,
+      password,
+      firstName,
+      lastName,
+      email
+    },
+      "POST");
+    return res.token;
+  }
+
+  // FIXME: Make sure documentation is accurate for error handling.
+   /** Logs in a user with a valid username and password.
+   *
+   *  For an authenticated username and password, returns a token.
+   *
+   *  For failed authentication, returns error object =>
+   *      { error: message, status}
+   */
+   static async logInUser({ username, password }) {
+    let res = await this.request('auth/token', {
+      username,
+      password
+    },
+      "POST");
+
+    this.token = res.token;
+    return this.token;
+  }
 }
 
 export default BabyBootcampAPI;
