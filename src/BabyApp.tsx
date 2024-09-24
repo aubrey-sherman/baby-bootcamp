@@ -7,9 +7,6 @@ import RoutesList from './RoutesList.tsx';
 import userContext from './userContext.ts';
 import NavBar from './NavBar.tsx';
 
-// NOTE: Not being used; review Jobly custom hook for storage
-// export const TOKEN_STORAGE_ID = 'baby-token';
-
 /** Baby Bootcamp application.
  *
  * Props: none
@@ -95,7 +92,6 @@ function BabyApp() {
       setErrors([]);
     }
 
-  //FIXME: Modify sign up info based on registration form
   /** Signs up a user when given valid input data.
    *
    * Calls login function upon successful signup.
