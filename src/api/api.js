@@ -39,20 +39,20 @@ class BabyBootcampAPI {
 
   /** Get current user's feeding entries by username. */
   static async userEntries(username) {
-    let res = await this.request(`eat/${username}`)
+    let res = await this.request(`feeding-entries/${username}`)
     return res.userEntries;
   }
 
   /** Create a new feeding entry. */
   static async createEntry(createdData) {
-    let res = await this.request(`/eat`, data, "POST");
+    let res = await this.request(`feeding-entries`, data, "POST");
     // FIXME: update what is returned
     return res;
   }
 
   /** Update an existing feeding entry. */
   static async updateEntry(entryId, updatedData) {
-    let res = await this.request(`eat/`, updatedData, "PATCH");
+    let res = await this.request(`feeding-entries/${entryId}`, updatedData, "PATCH");
   }
 
   /**  Register a user with data from sign up form. Returns a token on success. */
