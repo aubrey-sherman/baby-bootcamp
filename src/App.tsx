@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import BabyApp from './BabyApp.tsx';
 import './App.css';
 
