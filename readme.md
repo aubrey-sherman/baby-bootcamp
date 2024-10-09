@@ -2,12 +2,14 @@
 
 1. Clone the repo
 
-2. Run `npm install` and then `npm run ...`:
+2. Run `npm install`
+
+3. Run `npm run <add command from below>`:
 
 | Command     | Description          |
 |-------------|----------------------|
 | start       | Start                |
-|  build      | Build to dist dir    |
+| build       | Build to dist dir    |
 | test        | Run tests            |
 | test:cov    | Run tests w/coverage |
 | test:debug  | Run tests w/debugger |
