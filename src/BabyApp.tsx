@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { jwtDecode as decode } from "jwt-decode";
-
 import { Navigate } from 'react-router-dom';
 import BabyBootcampApi from "./api/api.js";
 import RoutesList from './RoutesList.tsx';
-import userContext from './userContext.ts';
+import UserContext from './auth/UserContext.ts';
 import NavBar from './NavBar.tsx';
 
 /** Baby Bootcamp application.
@@ -49,36 +48,43 @@ function BabyApp() {
   * Updates state with token.
   * If login fails to authenticate, renders error message.
   */
-  async function handleLogin({ username: password}: {username: string; password: string }) {
-    const apiToken = await BabyBootcampApi.logInUser({ username, password });
 
-    if (apiToken) {
-      setToken(apiToken);
-      localStorage.setItem('token', apiToken);
-      < Navigate to={"/"} />;
-    }
-  }
+  type tPayload = {
+    username: string,
+    // isAdmin: user.isAdmin === true
+  };
 
-  useEffect(function fetchUserDataOnLogin() {
+  useEffect(
+    function fetchUserDataOnLogin() {
     async function fetchUserData() {
-      if (token !== "") {
-        const username = decode(token).username;
-        const userData = await BabyBootcampApi.getUserDetails(username);
+      if (token) {
+        try {
+          let { username } = decode<tPayload>(token);
+          BabyBootcampApi.token = token;
+          let currentUser = await BabyBootcampApi.getCurrentUser(username);
 
-        if (userData) {
           setCurrentUser({
-            username: username,
-            firstName: userData.firstName,
-            lastName: userData.lastName,
-            email: userData.email,
-            isAdmin: userData.isAdmin,
-            applications: userData.applications
+            infoLoaded: true,
+            data: currentUser
+          });
+        } catch (err) {
+          console.error("fetchUserDataOnLogin: problem loading", err);
+          setCurrentUser({
+            infoLoaded: true,
+            data: null
+          });
+        }
+      } else {
+        setCurrentUser({
+            infoLoaded: true,
+            data: null
           });
         }
       }
-    }
-    fetchUserData();
-  }, [token]);
+      fetchUserData();
+    },
+  [ token]
+  );
 
   /** Logs out current user by resetting states. */
     function handleLogout() {
@@ -121,19 +127,17 @@ function BabyApp() {
 
   return (
     <div className="BabyApp">
-      <userContext.Provider
-        value={{
-          currentUser: currentUser.data,
+      <UserContext.Provider
+        value={{ currentUser: currentUser.data,
           setCurrentUser
-        }}
-      >
-        <NavBar handleLogout={handleLogout} />
+         }}>
+        {/* <NavBar handleLogout={handleLogout} /> */}
         <RoutesList
           currentUser={currentUser.data}
-          handleLogin={handleLogin}
-          handleSignup={handleSignup}
+          // handleLogin={handleLogin}
+          // handleSignup={handleSignup}
         />
-      </userContext.Provider>
+      </UserContext.Provider>
     </div>
   );
 }
