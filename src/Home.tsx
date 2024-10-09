@@ -1,30 +1,26 @@
-import LoginButton from "./LoginButton.tsx";
-import NavBar from "./NavBar.tsx";
-// import { useAuth0 } from '@auth0/auth0-react';
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import UserContext from "./auth/UserContext.ts";
+import "./Home.css";
 
-/** Home component
+/** Homepage for Baby Bootcamp
  *
  * App -> BabyApp -> Routes -> Home
 */
 function Home() {
-  console.log("* Home")
-  // const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
+  const { user } = useContext(UserContext);
+  console.log("* Home");
 
   return (
     <div className="Home">
-      {isAuthenticated ? (
+      <h1>Baby Bootcamp 👶🏻 🍼 🧸 💤  🗓️</h1>
+      {user && <h2>Welcome back, {user.firstName || 'friend'}!</h2>}
+      {!user &&
         <>
-          <NavBar />
-          <h1>Baby Bootcamp 👶🏻 🍼 🧸 💤  🗓️</h1>
-          <h2>Welcome back!</h2>
-          <p>Log Out</p>
+          <Link to={'/login'}>Log In</Link>
+          <Link to={'/signup'}>Sign Up</Link>
         </>
-      ) : (
-        <>
-          <h1>Baby Bootcamp 👶🏻 🍼 🧸 💤  🗓️</h1>
-          <p>Log In</p>
-        </>
-      )}
+      }
     </div>
   );
 }
