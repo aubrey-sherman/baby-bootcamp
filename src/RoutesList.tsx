@@ -3,7 +3,7 @@ import NavBar from "./NavBar.tsx";
 import Home from "./Home.tsx";
 import Eat from "./Eat.tsx";
 import Sleep from "./Sleep.tsx";
-import { tCurrentUser } from "types.tsx";
+import { tCurrentUser } from "./types.ts";
 
 /** Routes for Baby App
  *
@@ -15,7 +15,7 @@ import { tCurrentUser } from "types.tsx";
  *    {Navigation, LoginForm, RegisterForm, Logout, Home, Eat, Sleep}
  */
 
-function RoutesList({ currentUser: tCurrentUser }) {
+function RoutesList({ currentUser }: { currentUser: tCurrentUser }) {
   console.log("* RoutesList");
 
   return (
