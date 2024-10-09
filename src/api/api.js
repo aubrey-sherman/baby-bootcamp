@@ -37,6 +37,12 @@ class BabyBootcampAPI {
 
   // Individual API routes
 
+  /** Get the current user. */
+  static async getCurrentUser(username) {
+    let res = await this.request(`users/${username}`);
+    return res.user;
+  }
+
   /** Get current user's feeding entries by username. */
   static async userEntries(username) {
     let res = await this.request(`feeding-entries/${username}`)
