@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom';
-import { v4 as uuid } from "uuid";
+import { Link, useNavigate } from 'react-router-dom';
 import Alert from "./Alert.tsx";
 
-/** Signup form for Jobly
+/** Sign-up form for Baby Bootcamp
  *
- * Props: handleSignup function, errors like ["message1", ...]
+ * Props: signup function, errors like ["message1", ...]
  * State: formData, errors
  *
- * RoutesList -> Signup Form
+ * RoutesList -> SignupForm -> Alert
 */
 
-function SignupForm({ handleSignup }) {
+function SignupForm({ }) {
+  const navigate = useNavigate();
   const defaultFormData = {
     username: "",
     password: "",
@@ -25,21 +25,17 @@ function SignupForm({ handleSignup }) {
 
   /** Update formData as user types into form fields */
   function handleChange(evt) {
-    const fieldName = evt.target.name;
-    const value = evt.target.value;
-
-    setFormData(currentData => {
-      currentData[fieldName] = value;
-      return { ...currentData };
-    });
+    const { name, value } = evt.target;
+    setFormData(currentData => ({ currentData, [name]: value }));
   }
 
-  /** Sends formData to JoblyApp on form submission */
+  /** Send formData to BabyBootcampApp on form submission */
   async function handleSubmit(evt) {
     evt.preventDefault();
 
     try {
-      await handleSignup(formData);
+      await signup(formData);
+      navigate("/")
     }
     catch (errs) {
       setErrors(errs);
