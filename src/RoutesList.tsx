@@ -3,6 +3,8 @@ import NavBar from "./NavBar.tsx";
 import Home from "./Home.tsx";
 import Eat from "./Eat.tsx";
 import Sleep from "./Sleep.tsx";
+import LoginForm from "./LoginForm.tsx";
+import SignupForm from "./SignupForm.tsx";
 import { tCurrentUser } from "./types.ts";
 
 /** Routes for Baby App
@@ -15,7 +17,7 @@ import { tCurrentUser } from "./types.ts";
  *    {Navigation, LoginForm, RegisterForm, Logout, Home, Eat, Sleep}
  */
 
-function RoutesList({ currentUser }: { currentUser: tCurrentUser }) {
+function RoutesList({ currentUser }: { currentUser: tCurrentUser }, logIn, signUp) {
   console.log("* RoutesList");
 
   return (
@@ -23,12 +25,12 @@ function RoutesList({ currentUser }: { currentUser: tCurrentUser }) {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-        {/* {currentUser === null &&
+        {currentUser === null &&
             <>
-              <Route path="/login" element={<LoginForm handleLogin={handleLogin} />} />
-              <Route path="/signup" element={<SignupForm handleSignup={handleSignup}  />} />
+              <Route path="/login" element={<LoginForm logIn={logIn} />} />
+              <Route path="/signup" element={<SignupForm signUp={signUp}  />} />
             </>
-          } */}
+          }
           {currentUser !== null &&
             <>
             <Route path="/eat" element={<Eat />} />
