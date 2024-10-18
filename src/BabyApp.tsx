@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import BabyBootcampApi from "./api/api.js";
 import RoutesList from './RoutesList.tsx';
 import UserContext from './auth/UserContext.ts';
-import NavBar from './NavBar.tsx';
+import { tRegisterParams } from "./types.ts";
 
 /** Baby Bootcamp application.
  *
@@ -43,66 +43,81 @@ function BabyApp() {
     token
   );
 
+  // Loads user info from API. Only runs when a user is logged in and has token.
+  useEffect(
+    function loadUserData() {
+      console.debug('useEffect running', "token=", token);
+
+      async function fetchCurrentUser() {
+        if (token !== '') {
+          try {
+            let { username } = decode<tPayload>(token);
+            // BabyBootcampApi.token = token;
+            let currentUser = await BabyBootcampApi.getCurrentUser(username);
+
+            setCurrentUser({
+              infoLoaded: true,
+              data: currentUser
+            });
+          } catch (err) {
+            console.error("loadUserData: problem loading", err);
+            setCurrentUser({
+              infoLoaded: true,
+              data: null
+            });
+          }
+        } else {
+          setCurrentUser({
+              infoLoaded: true,
+              data: null
+            });
+          }
+        }
+        fetchCurrentUser();
+      },
+    [token]
+  );
+
+  type tLogInParams = {
+    username: string;
+    password: string;
+  }
+
   /** Logs in a user with a valid username and password.
   *
   * Updates state with token.
+  *
   * If login fails to authenticate, renders error message.
   */
+  async function logIn({ username, password }: tLogInParams) {
+    const apiToken = await BabyBootcampApi.logInUser({ username, password });
+    localStorage.setItem('token', apiToken);
+    setToken(apiToken);
+    }
 
   type tPayload = {
-    username: string,
-    // isAdmin: user.isAdmin === true
+    username: string
   };
 
-  useEffect(
-    function fetchUserDataOnLogin() {
-    async function fetchUserData() {
-      if (token) {
-        try {
-          let { username } = decode<tPayload>(token);
-          BabyBootcampApi.token = token;
-          let currentUser = await BabyBootcampApi.getCurrentUser(username);
-
-          setCurrentUser({
-            infoLoaded: true,
-            data: currentUser
-          });
-        } catch (err) {
-          console.error("fetchUserDataOnLogin: problem loading", err);
-          setCurrentUser({
-            infoLoaded: true,
-            data: null
-          });
-        }
-      } else {
-        setCurrentUser({
-            infoLoaded: true,
-            data: null
-          });
-        }
-      }
-      fetchUserData();
-    },
-  [ token]
-  );
-
-  /** Logs out current user by resetting states. */
-    function handleLogout() {
+  /** Logs out current user site-wide by resetting states. */
+    function logOut() {
       setFeedingEntries(null);
       setCurrentUser({
-        data: null,
-        infoLoaded: true
+        infoLoaded: true,
+        data: null
       });
       setToken("");
       localStorage.clear();
-      setErrors([]);
     }
 
   /** Signs up a user when given valid input data.
    *
    * Calls login function upon successful signup.
    */
-  async function handleSignup({ username, password, firstName, lastName, email }) {
+  async function signUp(
+    { username, password, firstName, lastName, email }: tRegisterParams) {
+    console.log("signUp function called")
+
     const userData = {
       username,
       password,
@@ -110,18 +125,13 @@ function BabyApp() {
       lastName,
       email
     };
+    console.debug("userData=", userData);
 
     const apiToken = await BabyBootcampApi.registerUser(userData);
     setToken(apiToken);
     localStorage.setItem('token', apiToken);
-
-    if (apiToken) {
-      setToken(apiToken);
-      <Navigate to={'/'} />;
+    <Navigate to={'/'} />;
     }
-  }
-
-  // TODO: Write function here for updating feeding times.
 
   if (!currentUser.infoLoaded) return <p>Loading...</p>;
 
@@ -134,8 +144,8 @@ function BabyApp() {
         {/* <NavBar handleLogout={handleLogout} /> */}
         <RoutesList
           currentUser={currentUser.data}
-          // handleLogin={handleLogin}
-          // handleSignup={handleSignup}
+          signUp={signUp}
+          logIn={logIn}
         />
       </UserContext.Provider>
     </div>
