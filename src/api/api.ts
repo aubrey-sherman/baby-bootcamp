@@ -1,17 +1,19 @@
 // FIXME: add VITE_REACT... value in env
 const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL || 'http://localhost:3001';
 
+import { tRegisterParams, tLoginParams } from '../types.ts';
+
 /** API class with static methods for getting and sending to the API. */
 
-class BabyBootcampAPI {
+class BabyBootcampApi {
 
   // this will hold the authenticated user's JWT
-  static token;
+  static token: string;
 
   static async request(endpoint, data = {}, method = "GET") {
     const url = new URL(`${BASE_URL}/${endpoint}`);
     const headers = {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${BabyBootcampApi.token}`,
       'content-type': 'application/json',
     };
 
@@ -62,15 +64,11 @@ class BabyBootcampAPI {
   }
 
   /**  Register a user with data from sign up form. Returns a token on success. */
-  static async registerUser({ username, password, firstName, lastName, email }) {
-    let res = await this.request('auth/register', {
-      username,
-      password,
-      firstName,
-      lastName,
-      email
-    },
-      "POST");
+  static async registerUser(userData: tRegisterParams) {
+    console.debug("Frontend registerUser running")
+    let res = await this.request('auth/register', userData, "POST");
+
+    console.debug("res=", res)
     return res.token;
   }
 
@@ -82,7 +80,7 @@ class BabyBootcampAPI {
    *  For failed authentication, returns error object =>
    *      { error: message, status}
    */
-   static async logInUser({ username, password }) {
+   static async logInUser({ username, password }: tLoginParams) {
     let res = await this.request('auth/token', {
       username,
       password
@@ -94,4 +92,4 @@ class BabyBootcampAPI {
   }
 }
 
-export default BabyBootcampAPI;
+export default BabyBootcampApi;
