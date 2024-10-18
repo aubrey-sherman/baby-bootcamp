@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Alert from "./Alert.tsx";
+import { tLogIn } from "./types.ts";
 
 /** Log-in form for Baby Bootcamp.
  *
@@ -10,7 +11,7 @@ import Alert from "./Alert.tsx";
  * RoutesList -> LoginForm -> Alert
  */
 
-function LoginForm({ logIn }) {
+function LoginForm({ logIn }: tLogIn) {
   console.log("* LoginForm");
 
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function LoginForm({ logIn }) {
   console.log("* LoginForm");
 
   /** Updates formData as user types into form fields. */
-  function handleChange(evt) {
+  function handleChange(evt: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = evt.target;
     setFormData(currentData => ({ ...currentData, [name]: value }));
   }
@@ -28,14 +29,14 @@ function LoginForm({ logIn }) {
    *
    * If login is not successful, sets errors.
    */
-  async function handleSubmit(evt) {
+  async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     try{
       await logIn(formData);
       navigate("/")
     }
-    catch (errs) {
-      setErrors(errs);
+    catch (errs: any) {
+      setFormErrors(errs);
     }
   }
 
@@ -46,7 +47,7 @@ function LoginForm({ logIn }) {
       <form onSubmit={handleSubmit}>
 
         <div className="form-group row align-items-center mb-3">
-          <label for="username-input" className="col-sm-4 col-form-label">Username</label>
+          <label htmlFor="username-input" className="col-sm-4 col-form-label">Username</label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -59,7 +60,7 @@ function LoginForm({ logIn }) {
         </div>
 
         <div className="form-group row align-items-center mb-3">
-          <label for="password-input" className="col-sm-4 col-form-label">Password</label>
+          <label htmlFor="password-input" className="col-sm-4 col-form-label">Password</label>
           <div className="col-sm-8">
             <input
               type="password"

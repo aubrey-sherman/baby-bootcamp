@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import Alert from "./Alert.tsx";
+import { tSignUp, tRegisterParams } from "./types.ts";
 
 /** Sign-up form for Baby Bootcamp
  *
@@ -10,7 +11,7 @@ import Alert from "./Alert.tsx";
  * RoutesList -> SignupForm -> Alert
 */
 
-function SignupForm({ }) {
+function SignupForm({ signUp }: tSignUp) {
   const navigate = useNavigate();
   const defaultFormData = {
     username: "",
@@ -24,20 +25,22 @@ function SignupForm({ }) {
   console.log("* SignupForm");
 
   /** Update formData as user types into form fields */
-  function handleChange(evt) {
+  function handleChange(evt: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = evt.target;
-    setFormData(currentData => ({ currentData, [name]: value }));
+    setFormData(currentData => ({ ...currentData, [name]: value }));
   }
 
   /** Send formData to BabyBootcampApp on form submission */
-  async function handleSubmit(evt) {
+  async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
 
     try {
-      await signup(formData);
-      navigate("/")
+      await signUp(formData);
+      navigate('/')
+
     }
-    catch (errs) {
+    // FIXME: typing for errors array
+    catch (errs: any) {
       setErrors(errs);
     }
   }
@@ -49,7 +52,7 @@ function SignupForm({ }) {
       <form onSubmit={handleSubmit}>
 
         <div className="form-group row align-items-center mb-3">
-          <label for="username-input" className="col-sm-4 col-form-label">Username</label>
+          <label htmlFor="username-input" className="col-sm-4 col-form-label">Username</label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -62,7 +65,7 @@ function SignupForm({ }) {
         </div>
 
         <div className="form-group row align-items-center mb-3">
-          <label for="password-input" className="col-sm-4 col-form-label">Password</label>
+          <label htmlFor="password-input" className="col-sm-4 col-form-label">Password</label>
           <div className="col-sm-8">
             <input
               type="password"
@@ -75,7 +78,7 @@ function SignupForm({ }) {
         </div>
 
         <div className="form-group row align-items-center mb-3">
-          <label for="first-name-input" className="col-sm-4 col-form-label">First name</label>
+          <label htmlFor="first-name-input" className="col-sm-4 col-form-label">First name</label>
           <div className="col-sm-8">
             <input
               id="first-name-input"
@@ -88,7 +91,7 @@ function SignupForm({ }) {
         </div>
 
         <div className="form-group row align-items-center mb-3">
-          <label for="last-name-input" className="col-sm-4 col-form-label">Last name</label>
+          <label htmlFor="last-name-input" className="col-sm-4 col-form-label">Last name</label>
           <div className="col-sm-8">
             <input
               id="last-name-input"
@@ -101,7 +104,7 @@ function SignupForm({ }) {
         </div>
 
         <div className="form-group row align-items-center mb-3">
-          <label for="email-input" className="col-sm-4 col-form-label">Email</label>
+          <label htmlFor="email-input" className="col-sm-4 col-form-label">Email</label>
           <div className="col-sm-8">
             <input
               id="email-input"
