@@ -5,7 +5,7 @@ import Eat from "./Eat.tsx";
 import Sleep from "./Sleep.tsx";
 import LoginForm from "./LoginForm.tsx";
 import SignupForm from "./SignupForm.tsx";
-import { tCurrentUser } from "./types.ts";
+import { tCurrentUser, tSignUp, tLogIn, tRoutesProps } from "./types.ts";
 
 /** Routes for Baby App
  *
@@ -17,7 +17,7 @@ import { tCurrentUser } from "./types.ts";
  *    {Navigation, LoginForm, RegisterForm, Logout, Home, Eat, Sleep}
  */
 
-function RoutesList({ currentUser }: { currentUser: tCurrentUser }, logIn, signUp) {
+function RoutesList({ currentUser, signUp, logIn }: tRoutesProps) {
   console.log("* RoutesList");
 
   return (
