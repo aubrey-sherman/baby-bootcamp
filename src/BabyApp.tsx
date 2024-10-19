@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { jwtDecode as decode } from "jwt-decode";
-import { Navigate } from 'react-router-dom';
+import { BrowserRouter, Navigate } from 'react-router-dom';
 import BabyBootcampApi from "./api/api.js";
 import RoutesList from './RoutesList.tsx';
-import UserContext from './auth/UserContext.ts';
-import { tRegisterParams } from "./types.ts";
+import Navigation from "./Navigation.tsx";
+import { RegisterParams } from "./types.ts";
 
 /** Baby Bootcamp application.
  *
@@ -24,6 +24,7 @@ import { tRegisterParams } from "./types.ts";
  */
 function BabyApp() {
   const [feedingEntries, setFeedingEntries] = useState(null);
+
   const [currentUser, setCurrentUser] = useState({
     data: null,
     infoLoaded: false
@@ -43,6 +44,10 @@ function BabyApp() {
     token
   );
 
+  type Payload = {
+    username: string
+  };
+
   // Loads user info from API. Only runs when a user is logged in and has token.
   useEffect(
     function loadUserData() {
@@ -51,7 +56,7 @@ function BabyApp() {
       async function fetchCurrentUser() {
         if (token !== '') {
           try {
-            let { username } = decode<tPayload>(token);
+            let { username } = decode<Payload>(token);
             // BabyBootcampApi.token = token;
             let currentUser = await BabyBootcampApi.getCurrentUser(username);
 
@@ -78,7 +83,7 @@ function BabyApp() {
     [token]
   );
 
-  type tLogInParams = {
+  type LogInParams = {
     username: string;
     password: string;
   }
@@ -89,15 +94,11 @@ function BabyApp() {
   *
   * If login fails to authenticate, renders error message.
   */
-  async function logIn({ username, password }: tLogInParams) {
+  async function logIn({ username, password }: LogInParams) {
     const apiToken = await BabyBootcampApi.logInUser({ username, password });
     localStorage.setItem('token', apiToken);
     setToken(apiToken);
     }
-
-  type tPayload = {
-    username: string
-  };
 
   /** Logs out current user site-wide by resetting states. */
     function logOut() {
@@ -115,7 +116,7 @@ function BabyApp() {
    * Calls login function upon successful signup.
    */
   async function signUp(
-    { username, password, firstName, lastName, email }: tRegisterParams) {
+    { username, password, firstName, lastName, email, babyName }: RegisterParams) {
     console.log("signUp function called")
 
     const userData = {
@@ -123,7 +124,8 @@ function BabyApp() {
       password,
       firstName,
       lastName,
-      email
+      email,
+      babyName
     };
     console.debug("userData=", userData);
 
@@ -136,19 +138,16 @@ function BabyApp() {
   if (!currentUser.infoLoaded) return <p>Loading...</p>;
 
   return (
-    <div className="BabyApp">
-      <UserContext.Provider
-        value={{ currentUser: currentUser.data,
-          setCurrentUser
-         }}>
-        {/* <NavBar handleLogout={handleLogout} /> */}
-        <RoutesList
-          currentUser={currentUser.data}
-          signUp={signUp}
-          logIn={logIn}
-        />
-      </UserContext.Provider>
-    </div>
+    <BrowserRouter>
+      <div className="BabyApp">
+          <Navigation currentUser={currentUser.data} logOut={logOut} />
+          <RoutesList
+            currentUser={currentUser.data}
+            signUp={signUp}
+            logIn={logIn}
+          />
+      </div>
+    </BrowserRouter>
   );
 }
 
