@@ -104,6 +104,19 @@ function SignupForm({ signUp }: tSignUp) {
         </div>
 
         <div className="form-group row align-items-center mb-3">
+          <label htmlFor="last-name-input" className="col-sm-4 col-form-label">Your baby's name ❤️</label>
+          <div className="col-sm-8">
+            <input
+              id="last-name-input"
+              type="text"
+              name="babyName"
+              className="form-control"
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <div className="form-group row align-items-center mb-3">
           <label htmlFor="email-input" className="col-sm-4 col-form-label">Email</label>
           <div className="col-sm-8">
             <input
