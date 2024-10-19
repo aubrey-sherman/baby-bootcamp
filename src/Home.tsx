@@ -1,21 +1,21 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import UserContext from "./auth/UserContext.ts";
+import { useUserContext } from "./auth/UserContext.ts";
 import "./Home.css";
+import { CurrentUser, HomeProps } from "./types.ts";
 
 /** Homepage for Baby Bootcamp
  *
  * App -> BabyApp -> Routes -> Home
 */
-function Home() {
-  const { user } = useContext(UserContext);
-  console.log("* Home");
+function Home({ currentUser }: HomeProps) {
+  console.log("* Home", "currentUser=", currentUser);
 
   return (
     <div className="Home">
       <h1>Baby Bootcamp 👶🏻 🍼 🧸 💤  🗓️</h1>
-      {user && <h2>Welcome back, {user.firstName || 'friend'}!</h2>}
-      {!user &&
+      {currentUser !== null &&
+        <h2>Welcome back, {currentUser.firstName} and {currentUser.babyName}!</h2>}
+      {currentUser === null &&
         <>
           <Link to={'/login'}>Log In</Link>
           <Link to={'/signup'}>Sign Up</Link>
