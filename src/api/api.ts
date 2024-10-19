@@ -1,7 +1,7 @@
 // FIXME: add VITE_REACT... value in env
 const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL || 'http://localhost:3001';
 
-import { tRegisterParams, tLoginParams } from '../types.ts';
+import { RegisterParams, LoginParams } from '../types.ts';
 
 /** API class with static methods for getting and sending to the API. */
 
@@ -40,31 +40,25 @@ class BabyBootcampApi {
   // Individual API routes
 
   /** Get the current user. */
-  static async getCurrentUser(username) {
+  static async getCurrentUser(username: string) {
     let res = await this.request(`users/${username}`);
+
+    console.log("getCurrentUser user=", res.user)
     return res.user;
   }
 
   /** Get current user's feeding entries by username. */
-  static async userEntries(username) {
+  static async userEntries(username: string) {
     let res = await this.request(`feeding-entries/${username}`)
     return res.userEntries;
   }
 
   /** Create a new feeding entry. */
-  static async createEntry(createdData) {
-    let res = await this.request(`feeding-entries`, data, "POST");
-    // FIXME: update what is returned
-    return res;
-  }
 
   /** Update an existing feeding entry. */
-  static async updateEntry(entryId, updatedData) {
-    let res = await this.request(`feeding-entries/${entryId}`, updatedData, "PATCH");
-  }
 
   /**  Register a user with data from sign up form. Returns a token on success. */
-  static async registerUser(userData: tRegisterParams) {
+  static async registerUser(userData: RegisterParams) {
     console.debug("Frontend registerUser running")
     let res = await this.request('auth/register', userData, "POST");
 
@@ -80,7 +74,7 @@ class BabyBootcampApi {
    *  For failed authentication, returns error object =>
    *      { error: message, status}
    */
-   static async logInUser({ username, password }: tLoginParams) {
+   static async logInUser({ username, password }: LoginParams) {
     let res = await this.request('auth/token', {
       username,
       password
