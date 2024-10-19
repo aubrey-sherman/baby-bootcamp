@@ -1,4 +1,4 @@
-type tFeedingEntry = {
+type FeedingEntry = {
   id: string,
   username: string,
   eventTime: Date,
@@ -6,48 +6,71 @@ type tFeedingEntry = {
   eliminating: boolean,
 };
 
-type tRegisterParams = {
+type RegisterParams = {
   username: string;
   password: string;
   firstName: string;
   lastName: string;
   email: string;
+  babyName: string;
 }
 
-type tCurrentUser = {
+type UserData = {
   username: string,
   firstName: string,
   lastName: string,
   email: string,
-  feedingEntries: tFeedingEntry[]
+  babyName: string,
+  feedingEntries: FeedingEntry[]
+} | null;
+
+type CurrentUser = {
+  data: UserData | null;
+  infoLoaded: boolean;
 };
 
-type tLoginParams = {
+type LoginParams = {
   username: string;
   password: string;
 }
 
-type tLogIn = {
-  logIn: ({ username, password }: tLoginParams) => Promise<void>;
+type LogIn = {
+  logIn: ({ username, password }: LoginParams) => Promise<void>;
 }
 
-type tSignUp = {
+type SignUp = {
   signUp: (
-    { username, password, firstName, lastName, email }: tRegisterParams) => Promise<void>;
+    { username, password, firstName, lastName, email }: RegisterParams) => Promise<void>;
 }
 
-type tRoutesProps = {
-  currentUser: tCurrentUser;
-  signUp: tSignUp;
-  logIn: tLogIn;
+type LogOut = {
+  logOut: () => void;
+}
+
+interface NavigationProps {
+  currentUser: UserData;
+  logOut: LogOut;
+}
+
+interface RoutesProps {
+  currentUser: UserData;
+  signUp: SignUp;
+  logIn: LogIn;
+}
+
+interface HomeProps {
+  currentUser: UserData;
 }
 
 export type {
-  tFeedingEntry,
-  tRegisterParams,
-  tCurrentUser,
-  tSignUp,
-  tLoginParams,
-  tLogIn,
-  tRoutesProps
+  FeedingEntry,
+  RegisterParams,
+  UserData,
+  CurrentUser,
+  SignUp,
+  LoginParams,
+  LogIn,
+  RoutesProps,
+  HomeProps,
+  NavigationProps
 };
