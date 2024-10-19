@@ -1,11 +1,11 @@
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-import NavBar from "./NavBar.tsx";
+import NavBar from "./Navigation.tsx";
 import Home from "./Home.tsx";
 import Eat from "./Eat.tsx";
 import Sleep from "./Sleep.tsx";
 import LoginForm from "./LoginForm.tsx";
 import SignupForm from "./SignupForm.tsx";
-import { tCurrentUser, tSignUp, tLogIn, tRoutesProps } from "./types.ts";
+import { CurrentUser, SignUp, LogIn, RoutesProps } from "./types.ts";
 
 /** Routes for Baby App
  *
@@ -17,14 +17,13 @@ import { tCurrentUser, tSignUp, tLogIn, tRoutesProps } from "./types.ts";
  *    {Navigation, LoginForm, RegisterForm, Logout, Home, Eat, Sleep}
  */
 
-function RoutesList({ currentUser, signUp, logIn }: tRoutesProps) {
-  console.log("* RoutesList");
+function RoutesList({ currentUser, signUp, logIn }: RoutesProps) {
+  console.log("* RoutesList", currentUser);
 
   return (
     <div className="RoutesList">
-      <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home currentUser={currentUser} />} />
         {currentUser === null &&
             <>
               <Route path="/login" element={<LoginForm logIn={logIn} />} />
@@ -33,13 +32,12 @@ function RoutesList({ currentUser, signUp, logIn }: tRoutesProps) {
           }
           {currentUser !== null &&
             <>
-            <Route path="/eat" element={<Eat />} />
-            <Route path="/sleep" element={<Sleep />} />
+            <Route path="/eat" element={<Eat currentUser={currentUser}/>} />
+            {/* <Route path="/sleep" element={<Sleep />} /> */}
             </>
           }
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      </BrowserRouter>
     </div>
   )
 
