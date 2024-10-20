@@ -1,5 +1,5 @@
-import CalendarView from "./CalendarView.tsx";
 import { useState } from "react";
+import CalendarView from "./CalendarView.tsx";
 
 /** CalendarManager handles the logic for calculating dates.
  *
@@ -7,71 +7,47 @@ import { useState } from "react";
  */
 function CalendarManager() {
 
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [currentWeek, setCurrentWeek] = useState(0);
+  const today = new Date();
+
+  const [currentDate, setCurrentDate] = useState(new Date(today.getFullYear(), today.getMonth(), today.getDate()));
 
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
 
-  function generateCalendarData(month, year) {
-    const firstDay = new Date(year, month).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+  /** Calculates the start of the current week (Sunday) based on current date. */
+  function getStartOfWeek(date: Date) {
+      const dayOfWeek = date.getDay();
+      const startOfWeek = new Date(date);
 
-    return { firstDay, daysInMonth };
+      startOfWeek.setDate(date.getDate() - dayOfWeek);
+
+      return startOfWeek;
   };
 
+  /** Modifies currentDate by subtracting 7 days to navigate between weeks. */
   function handlePreviousWeek() {
-    if (currentWeek === 0) {
-      handlePreviousMonth();
-      setCurrentWeek(4);
-    } else {
-      setCurrentWeek(currentWeek - 1);
+    const prevWeekDate = new Date(currentDate);
+    prevWeekDate.setDate(currentDate.getDate() - 7);
+    setCurrentDate(prevWeekDate);
     }
-};
 
+  /** Modifies currentDate by adding 7 days to navigate between weeks. */
   function handleNextWeek() {
-    const { firstDay, daysInMonth } = generateCalendarData(currentMonth, currentYear);
-    const totalWeeks = Math.ceil((daysInMonth + firstDay) / 7);
-
-    if (currentWeek >= totalWeeks - 1) {
-      handleNextMonth();
-      setCurrentWeek(0);
-    } else {
-      setCurrentWeek(currentWeek + 1);
-    }
-};
-
-  function handlePreviousMonth() {
-    if (currentMonth === 0) {
-      setCurrentMonth(11);
-      setCurrentYear(currentYear - 1);
-    } else {
-      setCurrentMonth(currentMonth - 1);
-    }
+    const nextWeekDate = new Date(currentDate);
+    nextWeekDate.setDate(currentDate.getDate() + 7);
+    setCurrentDate(nextWeekDate);
   };
 
-  function handleNextMonth() {
-    if (currentMonth === 11) {
-      setCurrentMonth(0);
-      setCurrentYear(currentYear + 1);
-    } else {
-      setCurrentMonth(currentMonth + 1);
-    }
-  };
-
-  const calendarData = generateCalendarData(currentMonth, currentYear);
-const monthAndYear = `${monthNames[currentMonth]} ${currentYear}`;
+  const startOfWeek = getStartOfWeek(currentDate);
+  const monthAndYear = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
 
   return (
     <div>
-      <button onClick={handlePreviousMonth}>Previous</button>
-      <button onClick={handleNextMonth}>Next</button>
+      <button onClick={handlePreviousWeek}>Previous</button>
+      <button onClick={handleNextWeek}>Next</button>
       <CalendarView
-          firstDay={calendarData.firstDay}
-          daysInMonth={calendarData.daysInMonth}
+          startOfWeek={startOfWeek}
           monthAndYear={monthAndYear}
-          currentWeek={currentWeek}
       />
     </div>
   );
