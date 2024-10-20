@@ -1,64 +1,50 @@
+import './CalenderView.css'
+
 /** Calendar component.
  *
  * Displayer's the current feeding times for a logged-in user.
  *
  * CalendarManager -> CalendarView
  */
-function CalendarView({ firstDay, daysInMonth, monthAndYear, currentWeek }) {
+function CalendarView({ startOfWeek, monthAndYear }) {
   console.log("* CalendarView")
 
-  const days = [];
-  let day = 1;
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  // Fill the array with days of the month
-  for (let i = 0; i < 6; i++) {
-    let week = [];
-
-    for (let j = 0; j < 7; j++) {
-        if (i === 0 && j < firstDay) {
-            week.push(null);  // Empty cells before the first day of the month
-        } else if (day > daysInMonth) {
-            week.push(null);  // Empty cells after the last day of the month
-        } else {
-            week.push(day);
-            day++;
-        }
-    }
-
-      days.push(week);
+  const week = [];
+  for (let i = 0; i < 7; i++) {
+      const date = new Date(startOfWeek);
+      date.setDate(startOfWeek.getDate() + i);
+      week.push(date);
   }
 
-  // Get the specific week to display
-  const weekToDisplay = days[currentWeek] || [];
-
-
   return (
-    <div className="CalendarView">
+    <div>
       <h2>{monthAndYear}</h2>
-      <table>
+        <table>
           <thead>
             <tr>
-              <th>Sun</th>
-              <th>Mon</th>
-              <th>Tue</th>
-              <th>Wed</th>
-              <th>Thu</th>
-              <th>Fri</th>
-              <th>Sat</th>
+              <th>Night Feeding</th>
+              {daysOfWeek.map((day, index) => (
+                <th key={index}>{day}</th>
+                ))}
             </tr>
           </thead>
           <tbody>
             <tr>
-              {weekToDisplay.map((day, index) => (
+              <td>
+                {/* Blocks will go here, like 'First', 'Second', 'Third'... */}
+              </td>
+              {week.map((date, index) => (
                 <td key={index}>
-                  {day !== null ? day : ''}
+                    {date.getDate()} {/* Display the day of the month */}
                 </td>
               ))}
             </tr>
           </tbody>
-      </table>
+        </table>
     </div>
-  );
+    );
 };
 
 export default CalendarView;
