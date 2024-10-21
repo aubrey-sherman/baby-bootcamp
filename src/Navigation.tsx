@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { NavigationProps } from "./types.ts";
+import './Navigation.css';
 
 /** Navigation bar for site that is shown on every page.
  *
