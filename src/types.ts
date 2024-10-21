@@ -47,6 +47,11 @@ type LogOut = {
   logOut: () => void;
 }
 
+type FeedingBlock = {
+  id: string;
+  number: number;
+}
+
 interface NavigationProps {
   currentUser: UserData;
   logOut: LogOut;
@@ -72,5 +77,6 @@ export type {
   LogIn,
   RoutesProps,
   HomeProps,
-  NavigationProps
+  NavigationProps,
+  FeedingBlock
 };
