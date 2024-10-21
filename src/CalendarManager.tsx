@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
+import { FeedingBlock } from './types.ts'
 import CalendarView from "./CalendarView.tsx";
 
-/** CalendarManager handles the logic for calculating dates.
+/** CalendarManager handles the logic for the calender view.
+ *
+ * Calculates dates, and adds/removes feeding blocks.
  *
  * CalendarManager -> CalenderView
  */
@@ -10,6 +14,26 @@ function CalendarManager() {
   const today = new Date();
 
   const [currentDate, setCurrentDate] = useState(new Date(today.getFullYear(), today.getMonth(), today.getDate()));
+  const [feedingBlocks, setFeedingBlocks] = useState<FeedingBlock[]>([]);
+
+  /** Adds a feeding block to the calendar. */
+  function addFeedingBlock(blockToAdd: number) {
+    console.log("block to add", blockToAdd);
+    const newFeedingBlock = { id: uuidv4(), number: feedingBlocks.length + 1 }
+    setFeedingBlocks([...feedingBlocks, newFeedingBlock]);
+  }
+
+  /** Removes a feeding block from the calendar.*/
+  function removeFeedingBlock(blockId: string) {
+    const updatedBlocks = feedingBlocks.filter(block => block.id !== blockId);
+
+    const renumberedBlocks = updatedBlocks.map((block: FeedingBlock, index: number) => ({
+      ...block,
+      number: index + 1,
+    }));
+
+    setFeedingBlocks(renumberedBlocks);
+  }
 
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
@@ -42,12 +66,28 @@ function CalendarManager() {
   const monthAndYear = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
 
   return (
-    <div>
-      <button onClick={handlePreviousWeek}>Previous</button>
-      <button onClick={handleNextWeek}>Next</button>
+    <div className='CalendarManager'>
+      <button onClick={handlePreviousWeek}>Previous week</button>
+      <button onClick={handleNextWeek}>Next week</button>
+
+      <form onSubmit={(evt) => {
+        evt.preventDefault();
+        if (feedingBlocks.length === 0) {
+          addFeedingBlock(1);
+        } else {
+          const lastBlock = feedingBlocks[feedingBlocks.length-1].number;
+          const newBlock = lastBlock + 1;
+          addFeedingBlock(newBlock);
+        }
+      }}>
+        {/* <input type='text' name='block' placeholder='Add new feeding block' /> */}
+        <button type='submit'>Add a feeding block</button>
+      </form>
       <CalendarView
-          startOfWeek={startOfWeek}
-          monthAndYear={monthAndYear}
+        startOfWeek={startOfWeek}
+        monthAndYear={monthAndYear}
+        feedingBlocks={feedingBlocks}
+        removeFeedingBlock={removeFeedingBlock}
       />
     </div>
   );
