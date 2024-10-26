@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { FeedingBlock } from './types.ts'
+import { FeedingBlock, FeedingEntry } from './types.ts'
 import CalendarView from "./CalendarView.tsx";
+
+type CalendarManagerProps = {
+  feedingEntries?: FeedingEntry[];
+}
 
 /** CalendarManager handles the logic for the calender view.
  *
@@ -9,7 +13,7 @@ import CalendarView from "./CalendarView.tsx";
  *
  * CalendarManager -> CalenderView
  */
-function CalendarManager() {
+function CalendarManager({ feedingEntries }: CalendarManagerProps) {
 
   const today = new Date();
 
@@ -23,7 +27,7 @@ function CalendarManager() {
     setFeedingBlocks([...feedingBlocks, newFeedingBlock]);
   }
 
-  /** Removes a feeding block from the calendar.*/
+  /** Removes a feeding block from the calendar. */
   function removeFeedingBlock(blockId: string) {
     const updatedBlocks = feedingBlocks.filter(block => block.id !== blockId);
 
@@ -87,6 +91,7 @@ function CalendarManager() {
         startOfWeek={startOfWeek}
         monthAndYear={monthAndYear}
         feedingBlocks={feedingBlocks}
+        feedingEntries={feedingEntries}
         removeFeedingBlock={removeFeedingBlock}
       />
     </div>
