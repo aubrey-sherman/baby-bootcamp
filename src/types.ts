@@ -4,6 +4,7 @@ type FeedingEntry = {
   eventTime: Date,
   volumeInOunces: number,
   eliminating: boolean,
+  block: number
 };
 
 type RegisterParams = {
