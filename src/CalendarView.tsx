@@ -1,5 +1,16 @@
-import { FeedingBlock } from 'types';
+import { FeedingBlock, FeedingEntry } from './types';
 import './CalenderView.css'
+import CalendarCell from './CalendarCell';
+
+type RemoveFeedingBlock = (blockId: string) => void;
+
+type CalendarViewProps = {
+  startOfWeek: Date;
+  monthAndYear: string;
+  feedingBlocks: FeedingBlock[];
+  feedingEntries?: FeedingEntry[];
+  removeFeedingBlock: RemoveFeedingBlock;
+}
 
 /** Calendar component.
  *
@@ -7,7 +18,7 @@ import './CalenderView.css'
  *
  * CalendarManager -> CalendarView
  */
-function CalendarView({ startOfWeek, monthAndYear, feedingBlocks, removeFeedingBlock }) {
+function CalendarView({ startOfWeek, monthAndYear, feedingBlocks, feedingEntries, removeFeedingBlock }: CalendarViewProps) {
   console.log("* CalendarView", feedingBlocks)
 
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -56,9 +67,7 @@ function CalendarView({ startOfWeek, monthAndYear, feedingBlocks, removeFeedingB
                 </td>
                 {week.map((date, dateIndex) => (
                   <td key={dateIndex}>
-                    {/* {date.getDate()} */}
-                    Time:<br></br>
-                    Amount:
+                    {date.getDate()}
                   </td>
                 ))}
               </tr>
