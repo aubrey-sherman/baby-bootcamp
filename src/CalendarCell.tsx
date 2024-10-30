@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import FeedingTimeCell from './FeedingTimeCell';
 import FeedingAmountCell from './FeedingAmountCell';
 import { FeedingEntry } from './types';
+import { formatDateToTimeString } from './helpers/utils';
+import './CalendarCell.css';
 
 type CalendarCellProps = {
-  eventTime?: FeedingEntry['eventTime'];
+  blockId: string;
+  blockNumber: number;
+  date: Date;
+  feedingEntries: FeedingEntry[];
+  // onTimeSave: (entryId: string, newEventTime: Date) => void;
 }
 
 /** Calendar cell component.
@@ -13,24 +19,25 @@ type CalendarCellProps = {
  *
  * CalendarView -> CalendarCell -> { TimeCell, AmountCell }
  */
-function CalendarCell({ eventTime }: CalendarCellProps) {
-  const [time, setTime] = useState<string>(eventTime);
-  console.log("* Calendar")
-
-  /** Sends updated time to backend. */
-  function onTimeSave(newTime: string): void {
-    console.log(`Time is being sent to server as ${newTime}!`);
-  }
+function CalendarCell({ blockId, blockNumber, date, feedingEntries }: CalendarCellProps) {
+  console.log("* CalendarCell")
 
   return (
-    <div className="CalendarCell">
-      <FeedingTimeCell
-        onTimeSave={onTimeSave}
-        initialTime={feedingEntry.eventTime}
-      />
-      <FeedingAmountCell />
-    </div>
-  )
+    <td className="CalendarCell">
+      {feedingEntries.length > 0 ? (
+        feedingEntries.map(entry => (
+          <div key={entry.id} className="feeding-entry">
+            "Cell"
+            {/* <FeedingTimeCell
+              eventTime={entry.eventTime}
+              onTimeSave={(newTime) => onTimeSave(entry.id, newTime)} /> */}
+          </div>
+        ))
+      ) : (
+        <span className="no-entries">No entries!</span>
+      )}
+    </td>
+  );
 }
 
 export default CalendarCell;

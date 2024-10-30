@@ -1,18 +1,19 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './FeedingTimeCell.css';
+import { formatDateToTimeString } from './helpers/utils.ts';
 
 type FeedingTimeCellProps = {
-  initialTime?: string;
-  onTimeSave: (newTime: string) => void;
+  eventTime: Date;
+  onTimeSave: (newEventTime: Date) => void;
 }
 
-/** Handles time tracking.
+/** Displays and allows editing of the feeding time.
  *
  * CalendarCell -> FeedingTimeCell
 */
-function FeedingTimeCell({onTimeSave, initialTime = ''}): FeedingTimeCellProps {
-  const [time, setTime] = useState<string>(initialTime);
-  const [temporaryTime, setTemporaryTime] = useState<string>(initialTime);
+function FeedingTimeCell({ eventTime, onTimeSave }): FeedingTimeCellProps {
+  const [temporaryTime, setTemporaryTime] = useState<string>(formatDateToTimeString(eventTime));
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   console.log('* FeedingTimeCell');
 
@@ -25,10 +26,28 @@ function FeedingTimeCell({onTimeSave, initialTime = ''}): FeedingTimeCellProps {
     setError('');
   };
 
-  /** Validates time format as HH:MM. */
-  function validateTime(time: string): boolean {
-    const timeRegex = /^([0-1]\d|2[0-3]):([0-5]\d)$/;
-    return timeRegex.test(time);
+  // /** Validates time format as HH:MM. */
+  // function validateTime(time: string): boolean {
+  //   const timeRegex = /^([0-1]\d|2[0-3]):([0-5]\d)$/;
+  //   return timeRegex.test(time);
+  // }
+
+  /** Converts 'HH:MM' to Date. */
+  function convertTimeStringToDate(timeStr: string): Date | null {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    if (
+      isNaN(hours) ||
+      isNaN(minutes) ||
+      hours < 0 ||
+      hours > 23 ||
+      minutes < 0 ||
+      minutes > 59
+    ) {
+      return null;
+    }
+    const newDate = new Date(eventTime); // Preserve the original date
+    newDate.setHours(hours, minutes, 0, 0);
+    return newDate;
   }
 
   /** Sends updated time to parent on save.
@@ -36,31 +55,46 @@ function FeedingTimeCell({onTimeSave, initialTime = ''}): FeedingTimeCellProps {
    * If save is not successful, sets errors.
    */
   function handleSave(evt: React.FormEvent<HTMLFormElement>) {
-    if (validateTime(temporaryTime)) {
-      setTime(temporaryTime);
-      onTimeSave(temporaryTime);
+    evt.preventDefault();
+    const newDate = convertTimeStringToDate(temporaryTime);
+    if (newDate) {
+      onTimeSave(newDate);
+      setIsEditing(false);
+      setError('');
     } else {
-      setError('Please enter a valid time.');
+      setError('Please enter a valid time in HH:MM format.');
     }
-  }
+  };
 
   return (
     <div className="FeedingTimeCell">
-      <div className="input-group">
-        <input
-          type="time"
-          value={temporaryTime}
-          onChange={handleChange}
-          title='Set time'
-        />
-        <button className="save-button" onClick={handleSave}>
-          Save
-        </button>
-      </div>
-      {error && <span className="error">{error}</span>}
-      <div>
-        {time}
-      </div>
+      {isEditing ? (
+        <form onSubmit={handleSave} className="feeding-time-form">
+          <input
+            type="time"
+            value={temporaryTime}
+            onChange={handleChange}
+            required
+            className="feeding-time-input"
+          />
+          <button type="submit" className="feeding-time-save-button">Save</button>
+          <button
+            type="button"
+            onClick={() => {setIsEditing(false); setError(''); }}
+            className="feeding-time-cancel-button"
+          >
+            Cancel
+          </button>
+          {error && <span className="feeding-time-error">{error}</span>}
+        </form>
+      ) : (
+        <div className="feeding-time-display">
+          <strong>Time:</strong> {formatDateToTimeString(eventTime)}
+          <button onClick={() => setIsEditing(true)} className="feeding-time-edit-button">
+            Edit
+          </button>
+        </div>
+      )}
     </div>
   );
 }
