@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { FeedingBlock, FeedingEntry } from './types.ts'
 import CalendarView from "./CalendarView.tsx";
 
 type CalendarManagerProps = {
-  feedingEntries?: FeedingEntry[];
+  initialFeedingEntries: FeedingEntry[];
+  initialFeedingBlocks: FeedingBlock[];
 }
 
 /** CalendarManager handles the logic for the calender view.
@@ -13,37 +14,41 @@ type CalendarManagerProps = {
  *
  * CalendarManager -> CalenderView
  */
-function CalendarManager({ feedingEntries }: CalendarManagerProps) {
+function CalendarManager({ initialFeedingEntries = [], initialFeedingBlocks = [] }: CalendarManagerProps) {
 
   const today = new Date();
 
   const [currentDate, setCurrentDate] = useState(new Date(today.getFullYear(), today.getMonth(), today.getDate()));
-  const [feedingBlocks, setFeedingBlocks] = useState<FeedingBlock[]>([]);
+  const [feedingBlocks, setFeedingBlocks] = useState<FeedingBlock[]>(initialFeedingBlocks);
+  const [feedingEntries, setFeedingEntries] = useState<FeedingEntry[]>(initialFeedingEntries);
 
-  /** Adds a feeding block to the calendar. */
-  function addFeedingBlock(blockToAdd: number) {
-    console.log("block to add", blockToAdd);
-    const newFeedingBlock = { id: uuidv4(), number: feedingBlocks.length + 1 }
-    setFeedingBlocks([...feedingBlocks, newFeedingBlock]);
+  function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
+      evt.preventDefault();
+      if (feedingBlocks.length === 0) {
+        addFeedingBlock(1);
+      } else {
+        const lastBlock = feedingBlocks[feedingBlocks.length-1].number;
+        const newBlock = lastBlock + 1;
+        addFeedingBlock(newBlock);
+      }
   }
 
-  /** Removes a feeding block from the calendar. */
-  function removeFeedingBlock(blockId: string) {
-    const updatedBlocks = feedingBlocks.filter(block => block.id !== blockId);
-
-    const renumberedBlocks = updatedBlocks.map((block: FeedingBlock, index: number) => ({
-      ...block,
-      number: index + 1,
-    }));
-
-    setFeedingBlocks(renumberedBlocks);
+  /** Creates and adds a new feeding block to the calendar with a unique ID. */
+  function addFeedingBlock(blockNumber: number) {
+    const newFeedingBlock: FeedingBlock = {
+      id: uuidv4(), // or block-number?
+      number: feedingBlocks.length + 1
+    }
+    // TODO: Send to database via the API
+    setFeedingBlocks((previousBlocks) => [...previousBlocks, newFeedingBlock]);
+    console.log(`CalendarManager added new block: ${newFeedingBlock}`);
   }
 
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
 
   /** Calculates the start of the current week (Sunday) based on current date. */
-  function getStartOfWeek(date: Date) {
+  function getStartOfWeek(date: Date): Date {
       const dayOfWeek = date.getDay();
       const startOfWeek = new Date(date);
 
@@ -67,24 +72,13 @@ function CalendarManager({ feedingEntries }: CalendarManagerProps) {
   };
 
   const startOfWeek = getStartOfWeek(currentDate);
-  const monthAndYear = `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+  const monthAndYear = startOfWeek.toLocaleString('default', { month: 'long', year: 'numeric' });
 
   return (
     <div className='CalendarManager'>
       <button onClick={handlePreviousWeek}>Previous week</button>
       <button onClick={handleNextWeek}>Next week</button>
-
-      <form onSubmit={(evt) => {
-        evt.preventDefault();
-        if (feedingBlocks.length === 0) {
-          addFeedingBlock(1);
-        } else {
-          const lastBlock = feedingBlocks[feedingBlocks.length-1].number;
-          const newBlock = lastBlock + 1;
-          addFeedingBlock(newBlock);
-        }
-      }}>
-        {/* <input type='text' name='block' placeholder='Add new feeding block' /> */}
+      <form onSubmit={handleSubmit}>
         <button type='submit'>Add a feeding block</button>
       </form>
       <CalendarView
@@ -92,7 +86,6 @@ function CalendarManager({ feedingEntries }: CalendarManagerProps) {
         monthAndYear={monthAndYear}
         feedingBlocks={feedingBlocks}
         feedingEntries={feedingEntries}
-        removeFeedingBlock={removeFeedingBlock}
       />
     </div>
   );
