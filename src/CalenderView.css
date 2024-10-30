@@ -7,6 +7,10 @@ table {
   margin-top: 10px;
 }
 
+table, th, td {
+  border: 1px solid black;
+}
+
 @media (max-width: 768px) {
   table {
       max-height: 70vh;  /* Reduce height for smaller screens */
@@ -22,7 +26,6 @@ table {
 }
 
 th {
-  border: 1px solid black;
   padding: 10px;
   text-align: center;
   background-color: #f0f0f0;
@@ -30,7 +33,6 @@ th {
 }
 
 td {
-  border: 1px solid black;
   padding: 10px;
   text-align: center;
 }
