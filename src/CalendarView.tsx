@@ -3,14 +3,14 @@ import CalendarCell from './CalendarCell';
 import { FeedingBlock, FeedingEntry } from './types';
 import './CalenderView.css'
 
-// type RemoveFeedingBlock = (blockId: string) => void;
+type RemoveFeedingBlock = (blockId: string) => void;
 
 type CalendarViewProps = {
   startOfWeek: Date;
   monthAndYear: string;
   feedingBlocks: FeedingBlock[];
   feedingEntries: FeedingEntry[];
-  // removeFeedingBlock: RemoveFeedingBlock;
+  removeFeedingBlock: RemoveFeedingBlock;
   // onTimeSave: (entryId: string, newEventTime: Date) => void;
   }
 
@@ -25,7 +25,7 @@ function CalendarView({
   monthAndYear,
   feedingBlocks,
   feedingEntries = [],
-  // removeFeedingBlock,
+  removeFeedingBlock,
   // onTimeSave
  }: CalendarViewProps) {
   console.log("* CalendarView", feedingEntries)
@@ -40,51 +40,16 @@ function CalendarView({
       week.push(date);
   }
 
-  // /** Handles table click for removing a block/row. */
-  // function handleTableClick(evt: React.MouseEvent<HTMLTableElement>) {
-  //   console.debug("Clicked element:", evt)
-  //   const target = evt.target as HTMLElement;
-  //   const spanElement = target.tagName === 'TD' ? target.querySelector('span') : null;
-  //   console.debug(spanElement)
-
-  //   if (spanElement) {
-  //     const blockId = spanElement.getAttribute('data-id');
-  //     console.log("blockId=", blockId);
-  //     if (blockId && window.confirm(`Are you sure you want to remove this block?`)) {
-  //       removeFeedingBlock(blockId);
-  //     }
-  //   }
-  // };
-
-  // /** Preprocess feedingEntries into a Map<blockNumber, Map<dateString, FeedingEntry[]>>. */
-  // const feedingEntriesMap = useMemo(() => {
-  //   const map = new Map<number, Map<string, FeedingEntry[]>>();
-
-  //   feedingEntries.forEach(entry => {
-  //     const blockNumber = entry.block;
-  //     const dateStr = entry.eventTime.toDateString(); // e.g., 'Mon Aug 23 2021'
-
-  //     if (!map.has(blockNumber)) {
-  //       map.set(blockNumber, new Map<string, FeedingEntry[]>());
-  //     }
-
-  //     const dateMap = map.get(blockNumber)!;
-
-  //     if (!dateMap.has(dateStr)) {
-  //       dateMap.set(dateStr, []);
-  //     }
-
-  //     dateMap.get(dateStr)!.push(entry);
-  //   });
-
-  //   return map;
-  // }, [feedingEntries]);
-
-  // /** Filters feeding entries for a specific block and date. */
-  // function getEntriesForCell(blockNumber: number, date: Date): FeedingEntry[] {
-  //   const dateStr = date.toDateString();
-  //   return feedingEntriesMap.get(blockNumber)?.get(dateStr) || [];
-  // };
+  /** Handles table cell click for removing a block. */
+  function handleClick(evt: React.MouseEvent<HTMLTableCellElement>) {
+    console.debug("Clicked element:", evt);
+    const target = evt.target as HTMLElement;
+    console.debug("target=", target);
+    const blockId = target.getAttribute('data-block-id');
+    if (blockId && window.confirm(`Are you sure you want to remove this block?`)) {
+      removeFeedingBlock(blockId);
+    }
+  }
 
   return (
     <div>
@@ -102,22 +67,21 @@ function CalendarView({
             {feedingBlocks.length > 0 ? (
               feedingBlocks.map((feedingBlock: FeedingBlock) => (
                 <tr key={feedingBlock.id}>
-                  <td>{feedingBlock.number}</td>
+                  <td onClick={handleClick} data-block-id={feedingBlock.id}>
+                    {feedingBlock.number}
+                  </td>
                   {week.map((date) => (
-                    <td key={date.toISOString()}>
-                      {date.getDate()}
-                      <br />
-                      Time:
-                      <br />
-                      Amount:
-                    </td>
+                    <CalendarCell
+                      key={date.toISOString()}
+                      date={date.getDate()}
+                    />
                   ))}
                 </tr>
             ))
           ) : (
             <tr>
               <td colSpan={daysOfWeek.length+1} style={{ textAlign: 'center' }}>
-                No blocks available.
+                Your baby is sleeping through the night!
               </td>
             </tr>
           )}

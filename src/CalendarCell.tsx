@@ -6,11 +6,7 @@ import { formatDateToTimeString } from './helpers/utils';
 import './CalendarCell.css';
 
 type CalendarCellProps = {
-  blockId: string;
-  blockNumber: number;
-  date: Date;
-  feedingEntries: FeedingEntry[];
-  // onTimeSave: (entryId: string, newEventTime: Date) => void;
+  date: number;
 }
 
 /** Calendar cell component.
@@ -19,23 +15,23 @@ type CalendarCellProps = {
  *
  * CalendarView -> CalendarCell -> { TimeCell, AmountCell }
  */
-function CalendarCell({ blockId, blockNumber, date, feedingEntries }: CalendarCellProps) {
+function CalendarCell({ date }: CalendarCellProps) {
   console.log("* CalendarCell")
 
   return (
     <td className="CalendarCell">
-      {feedingEntries.length > 0 ? (
+      Today is {date}
+      {/* {feedingEntries.length > 0 ? (
         feedingEntries.map(entry => (
           <div key={entry.id} className="feeding-entry">
             "Cell"
             {/* <FeedingTimeCell
               eventTime={entry.eventTime}
               onTimeSave={(newTime) => onTimeSave(entry.id, newTime)} /> */}
-          </div>
+          {/* </div>
         ))
-      ) : (
-        <span className="no-entries">No entries!</span>
-      )}
+      ) : ( */}
+        {/* <span className="no-entries">No entries!</span> */}
     </td>
   );
 }
