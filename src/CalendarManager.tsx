@@ -44,6 +44,21 @@ function CalendarManager({ initialFeedingEntries = [], initialFeedingBlocks = []
     console.log(`CalendarManager added new block: ${newFeedingBlock}`);
   }
 
+  /** Removes a feeding block from the calendar. Remaining blocks are renumbered
+   * to remain sequential.
+   */
+  function removeFeedingBlock(blockId: string) {
+      // filter out removed block from array and save
+      const updatedBlocks = feedingBlocks.filter(block => block.id !== blockId);
+      // for each remaining block, map new numbers to their objects
+      const renumberedBlocks = updatedBlocks.map((block: FeedingBlock, index: number) => ({
+        ...block,
+        number: index + 1,
+      }));
+      // update state with the renumbered blocks
+      setFeedingBlocks(renumberedBlocks)
+  }
+
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
 
@@ -86,6 +101,7 @@ function CalendarManager({ initialFeedingEntries = [], initialFeedingBlocks = []
         monthAndYear={monthAndYear}
         feedingBlocks={feedingBlocks}
         feedingEntries={feedingEntries}
+        removeFeedingBlock={removeFeedingBlock}
       />
     </div>
   );
