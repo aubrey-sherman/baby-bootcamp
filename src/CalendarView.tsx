@@ -4,6 +4,7 @@ import { FeedingBlock, FeedingEntry } from './types';
 import './CalenderView.css'
 
 type RemoveFeedingBlock = (blockId: string) => void;
+type SetToEliminate = (blockId: string) => void;
 
 type CalendarViewProps = {
   startOfWeek: Date;
@@ -11,6 +12,7 @@ type CalendarViewProps = {
   feedingBlocks: FeedingBlock[];
   feedingEntries: FeedingEntry[];
   removeFeedingBlock: RemoveFeedingBlock;
+  setToEliminate: SetToEliminate;
   // onTimeSave: (entryId: string, newEventTime: Date) => void;
   }
 
@@ -26,6 +28,7 @@ function CalendarView({
   feedingBlocks,
   feedingEntries = [],
   removeFeedingBlock,
+  setToEliminate,
   // onTimeSave
  }: CalendarViewProps) {
   console.log("* CalendarView", feedingEntries)
@@ -51,6 +54,34 @@ function CalendarView({
     }
   }
 
+  /** Handles a user's submission to eliminate a block.
+   *
+   * If no other block is currently set to be eliminated, this will set the
+   * isEliminating property to true.
+  */
+  function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
+    evt.preventDefault();
+
+    // return only blocks with isEliminating set to true
+    const currentBlocksToEliminate = feedingBlocks.filter(
+      (feedingBlock) => feedingBlock.isEliminating === true);
+
+    // if there are any blocks already set to be eliminated
+    if (currentBlocksToEliminate.length > 0) {
+      console.log("You can only eliminate one block at a time.");
+    } else {
+      const td = evt.currentTarget.closest('td');
+      console.debug("td found", td);
+      const blockId = td?.getAttribute('data-block-id');
+
+      if (blockId) {
+        setToEliminate(blockId);
+      } else {
+        console.warn('No corresponding row found.');
+      }
+    }
+  }
+
   return (
     <div>
       <h2>{monthAndYear}</h2>
@@ -66,9 +97,12 @@ function CalendarView({
           <tbody>
             {feedingBlocks.length > 0 ? (
               feedingBlocks.map((feedingBlock: FeedingBlock) => (
-                <tr key={feedingBlock.id}>
+                <tr key={feedingBlock.id} className={feedingBlock.isEliminating ? "eliminating" : "not-eliminating"}>
                   <td onClick={handleClick} data-block-id={feedingBlock.id}>
                     {feedingBlock.number}
+                    <form onSubmit={handleSubmit}>
+                      <button type='submit'>Eliminate this block?</button>
+                    </form>
                   </td>
                   {week.map((date) => (
                     <CalendarCell

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { FeedingBlock, FeedingEntry } from './types.ts'
 import CalendarView from "./CalendarView.tsx";
@@ -37,7 +37,8 @@ function CalendarManager({ initialFeedingEntries = [], initialFeedingBlocks = []
   function addFeedingBlock(blockNumber: number) {
     const newFeedingBlock: FeedingBlock = {
       id: uuidv4(), // or block-number?
-      number: feedingBlocks.length + 1
+      number: feedingBlocks.length + 1,
+      isEliminating: false
     }
     // TODO: Send to database via the API
     setFeedingBlocks((previousBlocks) => [...previousBlocks, newFeedingBlock]);
@@ -57,6 +58,20 @@ function CalendarManager({ initialFeedingEntries = [], initialFeedingBlocks = []
       }));
       // update state with the renumbered blocks
       setFeedingBlocks(renumberedBlocks)
+  }
+
+  /** Changes the isEliminating property of a specific block to true. */
+  function setToEliminate(blockId: string) {
+    console.log("setToEliminate running")
+    const updatedBlocks = feedingBlocks.map((block) => {
+      if (block.id === blockId) {
+        return { ...block, isEliminating: true};
+      }
+
+      return block;
+    });
+    console.log("setToEliminate updatedBlocks", updatedBlocks);
+    setFeedingBlocks(updatedBlocks);
   }
 
   const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -102,6 +117,7 @@ function CalendarManager({ initialFeedingEntries = [], initialFeedingBlocks = []
         feedingBlocks={feedingBlocks}
         feedingEntries={feedingEntries}
         removeFeedingBlock={removeFeedingBlock}
+        setToEliminate={setToEliminate}
       />
     </div>
   );
