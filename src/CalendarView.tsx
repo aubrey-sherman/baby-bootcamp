@@ -66,7 +66,7 @@ function CalendarView({
     const currentBlocksToEliminate = feedingBlocks.filter(
       (feedingBlock) => feedingBlock.isEliminating === true);
 
-    // if there are any blocks
+    // if there are any blocks already set to be eliminated
     if (currentBlocksToEliminate.length > 0) {
       console.log("You can only eliminate one block at a time.");
     } else {
