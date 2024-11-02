@@ -51,6 +51,7 @@ type LogOut = {
 type FeedingBlock = {
   id: string;
   number: number;
+  isEliminating: boolean;
 }
 
 interface NavigationProps {
