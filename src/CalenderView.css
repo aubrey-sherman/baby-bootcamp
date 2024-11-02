@@ -25,6 +25,14 @@ table, th, td {
   }
 }
 
+.eliminating {
+  background-color: peachpuff;
+}
+
+.not-eliminating {
+  background-color: #f9f9f9
+}
+
 th {
   padding: 10px;
   text-align: center;
