@@ -9,7 +9,6 @@ import './Navigation.css';
  * BabyApp -> Navigation
  */
 function Navigation({ currentUser, logOut }: NavigationProps) {
-  console.log("* NavBar", currentUser);
 
   function loggedInNavigation() {
     return (

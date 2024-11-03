@@ -1,8 +1,6 @@
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-import NavBar from "./Navigation.tsx";
 import Home from "./Home.tsx";
 import Eat from "./Eat.tsx";
-import Sleep from "./Sleep.tsx";
 import LoginForm from "./LoginForm.tsx";
 import SignupForm from "./SignupForm.tsx";
 import { CurrentUser, SignUp, LogIn, RoutesProps } from "./types.ts";
@@ -18,7 +16,6 @@ import { CurrentUser, SignUp, LogIn, RoutesProps } from "./types.ts";
  */
 
 function RoutesList({ currentUser, signUp, logIn }: RoutesProps) {
-  console.log("* RoutesList", currentUser);
 
   return (
     <div className="RoutesList">

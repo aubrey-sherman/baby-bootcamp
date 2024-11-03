@@ -6,7 +6,6 @@ import { HomeProps } from './types.ts';
  * Eat -> CalendarManager
  */
 function Eat({ currentUser }: HomeProps) {
-  console.log("* Eat")
 
   return (
     <div className="Eat">

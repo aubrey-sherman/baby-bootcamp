@@ -15,7 +15,6 @@ function FeedingTimeCell({ eventTime, onTimeSave }): FeedingTimeCellProps {
   const [temporaryTime, setTemporaryTime] = useState<string>(formatDateToTimeString(eventTime));
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
-  console.log('* FeedingTimeCell');
 
   /** Updates time as user changes input.
    *

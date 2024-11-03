@@ -8,7 +8,6 @@ import { CurrentUser, HomeProps } from "./types.ts";
  * App -> BabyApp -> Routes -> Home
 */
 function Home({ currentUser }: HomeProps) {
-  console.log("* Home", "currentUser=", currentUser);
 
   return (
     <div className="Home">

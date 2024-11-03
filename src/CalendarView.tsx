@@ -31,8 +31,6 @@ function CalendarView({
   setToEliminate,
   // onTimeSave
  }: CalendarViewProps) {
-  console.log("* CalendarView", feedingEntries)
-  console.log('CalendarTable received feedingBlocks:', feedingBlocks);
 
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -45,9 +43,7 @@ function CalendarView({
 
   /** Handles table cell click for removing a block. */
   function handleClick(evt: React.MouseEvent<HTMLTableCellElement>) {
-    console.debug("Clicked element:", evt);
     const target = evt.target as HTMLElement;
-    console.debug("target=", target);
     const blockId = target.getAttribute('data-block-id');
     if (blockId && window.confirm(`Are you sure you want to remove this block?`)) {
       removeFeedingBlock(blockId);
@@ -68,7 +64,7 @@ function CalendarView({
 
     // if there are any blocks already set to be eliminated
     if (currentBlocksToEliminate.length > 0) {
-      console.log("You can only eliminate one block at a time.");
+      console.warn("You can only eliminate one block at a time.");
     } else {
       const td = evt.currentTarget.closest('td');
       console.debug("td found", td);

@@ -34,16 +34,6 @@ function BabyApp() {
   BabyBootcampApi.token = savedToken || '';
   const [token, setToken] = useState(savedToken || '');
 
-  console.debug(
-    "BabyApp",
-    "feedingEntries=",
-    feedingEntries,
-    "currentUser=",
-    currentUser,
-    "token=",
-    token
-  );
-
   type Payload = {
     username: string
   };
@@ -51,7 +41,6 @@ function BabyApp() {
   // Loads user info from API. Only runs when a user is logged in and has token.
   useEffect(
     function loadUserData() {
-      console.debug('useEffect running', "token=", token);
 
       async function fetchCurrentUser() {
         if (token !== '') {
@@ -65,7 +54,6 @@ function BabyApp() {
               data: currentUser
             });
           } catch (err) {
-            console.error("loadUserData: problem loading", err);
             setCurrentUser({
               infoLoaded: true,
               data: null
@@ -117,7 +105,6 @@ function BabyApp() {
    */
   async function signUp(
     { username, password, firstName, lastName, email, babyName }: RegisterParams) {
-    console.log("signUp function called")
 
     const userData = {
       username,
@@ -127,7 +114,6 @@ function BabyApp() {
       email,
       babyName
     };
-    console.debug("userData=", userData);
 
     const apiToken = await BabyBootcampApi.registerUser(userData);
     setToken(apiToken);

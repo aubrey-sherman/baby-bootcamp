@@ -42,8 +42,6 @@ class BabyBootcampApi {
   /** Get the current user. */
   static async getCurrentUser(username: string) {
     let res = await this.request(`users/${username}`);
-
-    console.log("getCurrentUser user=", res.user)
     return res.user;
   }
 
@@ -59,10 +57,7 @@ class BabyBootcampApi {
 
   /**  Register a user with data from sign up form. Returns a token on success. */
   static async registerUser(userData: RegisterParams) {
-    console.debug("Frontend registerUser running")
     let res = await this.request('auth/register', userData, "POST");
-
-    console.debug("res=", res)
     return res.token;
   }
 

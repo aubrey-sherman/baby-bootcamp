@@ -22,7 +22,6 @@ function SignupForm({ signUp }: tSignUp) {
   };
   const [formData, setFormData] = useState(defaultFormData);
   const [errors, setErrors] = useState([]);
-  console.log("* SignupForm");
 
   /** Update formData as user types into form fields */
   function handleChange(evt: React.ChangeEvent<HTMLInputElement>) {

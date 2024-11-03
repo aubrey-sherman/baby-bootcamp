@@ -16,7 +16,6 @@ type CalendarCellProps = {
  * CalendarView -> CalendarCell -> { TimeCell, AmountCell }
  */
 function CalendarCell({ date }: CalendarCellProps) {
-  console.log("* CalendarCell")
 
   return (
     <td className="CalendarCell">

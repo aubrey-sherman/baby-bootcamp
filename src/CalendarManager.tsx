@@ -42,7 +42,6 @@ function CalendarManager({ initialFeedingEntries = [], initialFeedingBlocks = []
     }
     // TODO: Send to database via the API
     setFeedingBlocks((previousBlocks) => [...previousBlocks, newFeedingBlock]);
-    console.log(`CalendarManager added new block: ${newFeedingBlock}`);
   }
 
   /** Removes a feeding block from the calendar. Remaining blocks are renumbered
@@ -62,7 +61,6 @@ function CalendarManager({ initialFeedingEntries = [], initialFeedingBlocks = []
 
   /** Changes the isEliminating property of a specific block to true. */
   function setToEliminate(blockId: string) {
-    console.log("setToEliminate running")
     const updatedBlocks = feedingBlocks.map((block) => {
       if (block.id === blockId) {
         return { ...block, isEliminating: true};
@@ -70,7 +68,6 @@ function CalendarManager({ initialFeedingEntries = [], initialFeedingBlocks = []
 
       return block;
     });
-    console.log("setToEliminate updatedBlocks", updatedBlocks);
     setFeedingBlocks(updatedBlocks);
   }
 

@@ -12,12 +12,10 @@ import { tLogIn } from "./types.ts";
  */
 
 function LoginForm({ logIn }: tLogIn) {
-  console.log("* LoginForm");
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [formErrors, setFormErrors] = useState([]);
-  console.log("* LoginForm");
 
   /** Updates formData as user types into form fields. */
   function handleChange(evt: React.ChangeEvent<HTMLInputElement>) {
