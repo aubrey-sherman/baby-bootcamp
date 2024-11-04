@@ -15,7 +15,7 @@ import { RegisterParams } from "./types.ts";
  *                        lastName,
  *                        isAdmin,
  *                        email,
- *                        feedingEntries = [{}, {}, {}, ...]
+ *                        feedingBlocks
  *                       }
  *
  * Effect: fetches user's data upon successful login
@@ -23,7 +23,7 @@ import { RegisterParams } from "./types.ts";
  * Baby Bootcamp -> RoutesList
  */
 function BabyApp() {
-  const [feedingEntries, setFeedingEntries] = useState(null);
+  // const [feedingEntries, setFeedingEntries] = useState(null);
 
   const [currentUser, setCurrentUser] = useState({
     data: null,
@@ -90,7 +90,7 @@ function BabyApp() {
 
   /** Logs out current user site-wide by resetting states. */
     function logOut() {
-      setFeedingEntries(null);
+      // setFeedingEntries(null);
       setCurrentUser({
         infoLoaded: true,
         data: null
