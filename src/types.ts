@@ -52,6 +52,7 @@ type FeedingBlock = {
   id: string;
   number: number;
   isEliminating: boolean;
+  feedingEntries: FeedingEntry[];
 }
 
 interface NavigationProps {
