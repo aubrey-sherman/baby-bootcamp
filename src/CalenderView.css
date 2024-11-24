@@ -1,67 +1,67 @@
-table {
+.calendar-container {
+  padding: 1rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+}
+
+.calendar-table {
   width: 100%;
-  height: auto;
-  max-height: 90vh;
-  overflow-y: auto;
   border-collapse: collapse;
-  margin-top: 10px;
+  table-layout: fixed;
+  border: 1px solid #e5e7eb;
 }
 
-table, th, td {
-  border: 1px solid black;
+.calendar-table th,
+.calendar-table td {
+  border-right: 1px solid #e5e7eb;
+  padding: 0;
+  height: 4rem;
 }
 
-@media (max-width: 768px) {
-  table {
-      max-height: 70vh;  /* Reduce height for smaller screens */
-      font-size: 14px;  /* Reduce font size for better fit */
-  }
+.calendar-table tr {
+  border-bottom: 1px solid #e5e7eb;
 }
 
-@media (max-width: 480px) {
-  table {
-      max-height: 60vh;
-      font-size: 12px;  /* Further reduce font size for very small screens */
-  }
+.calendar-table tr:last-child {
+  border-bottom: none;
 }
 
-.eliminating {
-  background-color: peachpuff;
+.calendar-table th:last-child,
+.calendar-table td:last-child {
+  border-right: none;
 }
 
-.not-eliminating {
-  background-color: #f9f9f9
+.calendar-table th {
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
 }
 
-th {
-  padding: 10px;
-  text-align: center;
-  background-color: #f0f0f0;
-  font-weight: bold;
+.cell-content {
+  height: 100%;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-td {
-  padding: 10px;
-  text-align: center;
+.header-content {
+  font-weight: 500;
+  font-size: 0.875rem;
 }
 
-h2 {
-  text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 10px;
+.data-content {
+  font-size: 1.125rem;
 }
 
-td:first-child {
-  background-color: #f9f9f9;
-  font-weight: bold;
-}
-
-td:hover {
-  background-color: #e0e0e0;
-  cursor: pointer;
-}
-
-span {
-  cursor: pointer;
-  color: 'red';
+/* TODO: Rename this class; not being truncated! */
+.truncate {
+  white-space: normal;
+  font-size: 12px;
+  overflow: visible;
+  background-color: white;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
