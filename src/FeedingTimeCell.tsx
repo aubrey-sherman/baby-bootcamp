@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Clock } from 'lucide-react';
+import { DateTime } from 'luxon';
+// import { Clock } from 'lucide-react';
+import TimezoneHandler from './helpers/TimezoneHandler';
 import './FeedingTimeCell.css';
 
 type FeedingTimeCellProps = {
-  eventTime: Date;
-  updateTime: (newEventTime: Date) => void;
+  blockId?: string,
+  entryId?: string,
+  feedingTime?: DateTime;
+  onTimeSave: (
+    blockId: string, entryId: string, newTime: DateTime
+  ) => void;
 }
 
 type TimeErrors = {
@@ -14,30 +20,41 @@ type TimeErrors = {
 
 /** Displays and allows editing of the feeding time.
  *
+ * Manages state for time form.
+ *
  * CalendarCell -> FeedingTimeCell
 */
-function FeedingTimeCell({ eventTime, updateTime }: FeedingTimeCellProps) {
+function FeedingTimeCell({
+  blockId,
+  entryId,
+  feedingTime,
+  onTimeSave
+}: FeedingTimeCellProps) {
+  const tzHandler = new TimezoneHandler();
+  const defaultTime = DateTime.now().setZone(tzHandler.getCurrentUserTimezone());
+
+  const timeToUse = feedingTime
+    ? tzHandler.parseToUserTimezone(feedingTime.toISO())
+    : defaultTime;
+
   const [hour, setHour] = useState('12');
   const [minute, setMinute] = useState('00');
   const [period, setPeriod] = useState('AM');
   const [errors, setErrors] = useState<TimeErrors>({});
   const [submitted, setSubmitted] = useState(false);
 
-  // Initialize time from eventTime prop
   useEffect(() => {
-    if (eventTime instanceof Date) {
-      const hours = eventTime.getHours();
-      const minutes = eventTime.getMinutes();
+    const localTime = timeToUse;
 
-      // Convert 24h to 12h format
-      const period = hours >= 12 ? 'PM' : 'AM';
-      const displayHours = hours % 12 || 12;
+    // Convert to 12-hour format
+    const hours = localTime.hour;
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = hours % 12 || 12;
 
-      setHour(String(displayHours).padStart(2, '0'));
-      setMinute(String(minutes).padStart(2, '0'));
-      setPeriod(period);
-    }
-  }, [eventTime]);
+    setHour(String(displayHours).padStart(2, '0'));
+    setMinute(String(localTime.minute).padStart(2, '0'));
+    setPeriod(period);
+  }, [feedingTime?.toISO()]);
 
   // Generate hours (1-12)
   const hours = Array.from({ length: 12 }, (_, i) =>
@@ -73,83 +90,88 @@ function FeedingTimeCell({ eventTime, updateTime }: FeedingTimeCellProps) {
     setSubmitted(true);
 
     if (validateTime()) {
-      // Convert 12h time to 24h Date object
-      const currentDate = eventTime || new Date();
-      const newDate = new Date(currentDate);
-
+      // Convert time to 24-hour format using DateTime
       let hours = parseInt(hour);
       if (period === 'PM' && hours !== 12) hours += 12;
       if (period === 'AM' && hours === 12) hours = 0;
 
-      newDate.setHours(hours);
-      newDate.setMinutes(parseInt(minute));
-      newDate.setSeconds(0);
+      // Use the existing date from timeToUse, only update the time components
+      const existingDate = timeToUse;
 
-      updateTime(newDate);
+      const newTime = timeToUse.set({
+        hour: hours,
+        minute: parseInt(minute),
+        second: 0,
+        millisecond: 0
+      });
+
+      onTimeSave(blockId!, entryId!, newTime);
     }
-  };
+  }
+
+  const userTimezone = tzHandler.getCurrentUserTimezone();
+  // const timezoneName = DateTime.local().setZone(userTimezone).zoneName;
+  const timezoneAbbr = DateTime.local().setZone(userTimezone).toFormat('ZZZZ');
 
   return (
-    <div className="w-64 bg-white rounded-lg shadow-sm p-4">
+    <div className="">
       <form onSubmit={handleSubmit}>
-        <div className="flex items-center gap-2 mb-4">
-          <Clock className="w-4 h-4 text-gray-500" />
-          <span className="text-sm font-medium">Select Time</span>
+        <div className="">
+          <div className="">
+            {/* <Clock className="clock"/> */}
+            <span className="directions timezone">Select Time in {timezoneAbbr}</span>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2 mb-4">
-          {/* Hour Select */}
+        <div className="time-selectors">
           <select
             value={hour}
             onChange={(e) => {
               setHour(e.target.value);
               if (submitted) validateTime();
             }}
-            className={`p-2 border rounded-md bg-white ${errors.hour ? 'border-red-500' : 'border-gray-200'}`}
+            className={`time-select ${errors.hour ? 'time-select-error' : 'border-gray-200'}`}
           >
             {hours.map(h => (
               <option key={h} value={h}>{h}</option>
             ))}
           </select>
 
-          <span className="text-xl">:</span>
+          <span className="time-separator">:</span>
 
-          {/* Minute Select */}
           <select
             value={minute}
             onChange={(e) => {
               setMinute(e.target.value);
               if (submitted) validateTime();
             }}
-            className={`p-2 border rounded-md bg-white ${errors.minute ? 'border-red-500' : 'border-gray-200'}`}
+            className={`time-select ${errors.minute ? 'time-select-error' : ''}`}
           >
             {minutes.map(m => (
               <option key={m} value={m}>{m}</option>
             ))}
           </select>
 
-          {/* AM/PM Select */}
           <select
             value={period}
             onChange={(e) => setPeriod(e.target.value)}
-            className="p-2 border rounded-md bg-white border-gray-200"
+            className="time-select"
           >
             <option value="AM">AM</option>
             <option value="PM">PM</option>
           </select>
         </div>
 
-        {/* Error Messages */}
         {errors.hour && (
-          <div className="text-red-500 text-sm mb-2">{errors.hour}</div>
+          <div className="error-message">{errors.hour}</div>
         )}
         {errors.minute && (
-          <div className="text-red-500 text-sm mb-2">{errors.minute}</div>
+          <div className="error-message">{errors.minute}</div>
         )}
 
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="submit-button"
           disabled={Object.keys(errors).length > 0 && submitted}
         >
           Set Time
