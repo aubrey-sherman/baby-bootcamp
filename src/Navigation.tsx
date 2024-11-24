@@ -12,12 +12,11 @@ function Navigation({ currentUser, logOut }: NavigationProps) {
 
   function loggedInNavigation() {
     return (
-    <>
+    <div className='Navigation'>
       <Link to="/"> Home </Link>
-      <Link to="/eat"> Eat </Link>
-      <Link to="/sleep"> Sleep </Link>
-      <Link to="/logout" onClick={logOut}> Log out</Link>
-    </>
+      <Link to="/eat"> [ Enter the training gym ] </Link>
+      <Link to="/logout" onClick={logOut}> Log out </Link>
+    </div>
     );
   }
 

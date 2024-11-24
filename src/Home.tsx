@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useUserContext } from "./auth/UserContext.ts";
 import "./Home.css";
 import { CurrentUser, HomeProps } from "./types.ts";
 
