@@ -1,10 +1,9 @@
 type FeedingEntry = {
   id: string,
   username: string,
-  eventTime: Date,
+  feedingTime: Date,
   volumeInOunces: number,
-  eliminating: boolean,
-  block: number
+  blockId: string
 };
 
 type RegisterParams = {
@@ -22,8 +21,7 @@ type UserData = {
   lastName: string,
   email: string,
   babyName: string,
-  feedingEntries: FeedingEntry[]
-} | null;
+}
 
 type CurrentUser = {
   data: UserData | null;
@@ -52,8 +50,9 @@ type FeedingBlock = {
   id: string;
   number: number;
   isEliminating: boolean;
-  feedingEntries: FeedingEntry[];
-}
+  username: string;
+  feedingEntries?: FeedingEntry[];
+};
 
 interface NavigationProps {
   currentUser: UserData;
@@ -70,6 +69,11 @@ interface HomeProps {
   currentUser: UserData;
 }
 
+interface EatProps {
+  username: string;
+  babyName: string;
+}
+
 export type {
   FeedingEntry,
   RegisterParams,
@@ -81,5 +85,6 @@ export type {
   RoutesProps,
   HomeProps,
   NavigationProps,
-  FeedingBlock
+  FeedingBlock,
+  EatProps
 };
