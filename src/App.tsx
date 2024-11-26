@@ -14,7 +14,9 @@ function App() {
 
   return (
     <div className="App">
-      <BabyApp />
+      <div className="App-content">
+        <BabyApp />
+      </div>
     </div>
   );
 };

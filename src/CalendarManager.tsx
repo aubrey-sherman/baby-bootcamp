@@ -1,68 +1,78 @@
-import { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
-import { FeedingBlock, FeedingEntry } from './types.ts'
+import { useState, useEffect } from "react";
+import { DateTime } from 'luxon';
+import { FeedingBlock } from './types.ts'
 import CalendarView from "./CalendarView.tsx";
-
-type CalendarManagerProps = {
-  initialFeedingEntries: FeedingEntry[];
-  initialFeedingBlocks: FeedingBlock[];
-}
+import BabyBootcampApi from "./api/api.ts";
+import TimezoneHandler from "./helpers/TimezoneHandler.ts";
 
 /** CalendarManager handles the logic for the calender view.
  *
- * Calculates dates, and adds/removes feeding blocks.
+ * Manages date calculations, week navigation, and feeding block operations
+ * with timezone-aware date handling.
  *
- * CalendarManager -> CalenderView
+ * Eat -> CalendarManager -> CalenderView
  */
-function CalendarManager({ initialFeedingEntries = [], initialFeedingBlocks = [] }: CalendarManagerProps) {
+function CalendarManager() {
+  const tzHandler = new TimezoneHandler();
+  const [feedingBlocks, setFeedingBlocks] = useState<FeedingBlock[]>([]);
+  const [infoLoaded, setInfoLoaded] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [submittingId, setSubmittingId] = useState<string | null>(null);
+  const [currentDate, setCurrentDate] = useState(
+    DateTime.now()
+      .setZone(tzHandler.getCurrentUserTimezone())
+      .startOf('day')
+  );
 
-  const today = new Date();
+  // Fetches feeding blocks and entries on mount.
+  useEffect(() => {
+    async function fetchBlocksWithEntries() {
+      const blocksAndEntries = await BabyBootcampApi.getUserBlocksWithEntries();
 
-  const [currentDate, setCurrentDate] = useState(new Date(today.getFullYear(), today.getMonth(), today.getDate()));
-  const [feedingBlocks, setFeedingBlocks] = useState<FeedingBlock[]>(initialFeedingBlocks);
-  const [feedingEntries, setFeedingEntries] = useState<FeedingEntry[]>(initialFeedingEntries);
+      setFeedingBlocks(blocksAndEntries);
+      setInfoLoaded(true);
+    }
 
-  function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
+    fetchBlocksWithEntries();
+  }, []);
+
+  // Logic for blocks
+
+  /** Handles the creation of a new feeding block. */
+  async function handleAddBlock(evt: React.FormEvent<HTMLFormElement>) {
       evt.preventDefault();
-      if (feedingBlocks.length === 0) {
-        addFeedingBlock(1);
-      } else {
-        const lastBlock = feedingBlocks[feedingBlocks.length-1].number;
-        const newBlock = lastBlock + 1;
-        addFeedingBlock(newBlock);
+      setIsSubmitting(true);
+      setError(null);
+      try {
+        const newBlock = await BabyBootcampApi.createBlockWithEntries();
+        setFeedingBlocks([...feedingBlocks, newBlock])
+      } catch (err) {
+        setError(Array.isArray(err) ? err[0] : 'Failed to create block');
+      } finally {
+        setIsSubmitting(false);
       }
   }
 
-  /** Creates and adds a new feeding block to the calendar with a unique ID. */
-  function addFeedingBlock(blockNumber: number) {
-    const newFeedingBlock: FeedingBlock = {
-      id: uuidv4(), // or block-number?
-      number: feedingBlocks.length + 1,
-      isEliminating: false
-    }
-    // TODO: Send to database via the API
-    setFeedingBlocks((previousBlocks) => [...previousBlocks, newFeedingBlock]);
-    console.log(`CalendarManager added new block: ${newFeedingBlock}`);
-  }
+  // TODO: Change from deleting to hiding to keep historical data
+  /** Handles the deletion of a feeding block. */
+  async function handleDeleteBlock(blockId: string) {
+    setSubmittingId(blockId);
+    setError(null);
 
-  /** Removes a feeding block from the calendar. Remaining blocks are renumbered
-   * to remain sequential.
-   */
-  function removeFeedingBlock(blockId: string) {
-      // filter out removed block from array and save
-      const updatedBlocks = feedingBlocks.filter(block => block.id !== blockId);
-      // for each remaining block, map new numbers to their objects
-      const renumberedBlocks = updatedBlocks.map((block: FeedingBlock, index: number) => ({
-        ...block,
-        number: index + 1,
-      }));
-      // update state with the renumbered blocks
-      setFeedingBlocks(renumberedBlocks)
+    try {
+      await BabyBootcampApi.deleteBlock(blockId);
+      const updatedBlocks = await BabyBootcampApi.getUserBlocksWithEntries();
+      setFeedingBlocks(updatedBlocks);
+    } catch (err) {
+      setError(Array.isArray(err) ? err[0] : 'Failed to delete block');
+    } finally {
+      setSubmittingId(null);
+    }
   }
 
   /** Changes the isEliminating property of a specific block to true. */
   function setToEliminate(blockId: string) {
-    console.log("setToEliminate running")
     const updatedBlocks = feedingBlocks.map((block) => {
       if (block.id === blockId) {
         return { ...block, isEliminating: true};
@@ -70,54 +80,133 @@ function CalendarManager({ initialFeedingEntries = [], initialFeedingBlocks = []
 
       return block;
     });
-    console.log("setToEliminate updatedBlocks", updatedBlocks);
-    setFeedingBlocks(updatedBlocks);
+    // setCurrentFeedingBlocks(updatedBlocks);
   }
 
-  const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
+  // Logic for entries
 
-  /** Calculates the start of the current week (Sunday) based on current date. */
-  function getStartOfWeek(date: Date): Date {
-      const dayOfWeek = date.getDay();
-      const startOfWeek = new Date(date);
-
-      startOfWeek.setDate(date.getDate() - dayOfWeek);
-
-      return startOfWeek;
-  };
-
-  /** Modifies currentDate by subtracting 7 days to navigate between weeks. */
-  function handlePreviousWeek() {
-    const prevWeekDate = new Date(currentDate);
-    prevWeekDate.setDate(currentDate.getDate() - 7);
-    setCurrentDate(prevWeekDate);
+  /** Handles time updates for feeding entries. When a user saves a new time, this
+   * and all subsequent entries in the row are updated.
+   *
+   * If API call fails, re-renders with the previous state.
+   */
+  async function handleTimeSave(blockId: string, entryId: string, newTime: DateTime) {
+    if (!blockId) {
+      return;
     }
 
-  /** Modifies currentDate by adding 7 days to navigate between weeks. */
-  function handleNextWeek() {
-    const nextWeekDate = new Date(currentDate);
-    nextWeekDate.setDate(currentDate.getDate() + 7);
-    setCurrentDate(nextWeekDate);
-  };
+    const previousBlocks = [...feedingBlocks];
+
+    try {
+      const updatedBlock = await BabyBootcampApi.updateTime(blockId, newTime);
+
+      setFeedingBlocks(previousBlocks =>
+        previousBlocks.map(block =>
+          block.id === blockId ? {
+            ...updatedBlock,
+            feedingEntries: updatedBlock.feedingEntries ?? []
+          } : block
+        )
+      );
+    } catch (error) {
+      console.error("Update failed:", error);
+      setFeedingBlocks(previousBlocks);
+    }
+  }
+
+  /** Handles amount updates for feeding entries.
+   *
+   * If API call fails, re-renders with the previous state.
+   */
+  async function handleAmountSave(blockId: string, entryId: string, newAmount: number) {
+
+    // NOTE: will need to convert from string to number since data is coming from a form
+    // try {
+    //   const updatedBlock = await BabyBootcampApi.updateAmount(blockId, entryId, newAmount);
+
+    //   setFeedingBlocks(prevBlocks =>
+    //     prev
+    //   )
+    // }
+  }
+
+
+  // Navigation
+
+  /** Gets the start of the week (Sunday) for a given date. */
+  function getStartOfWeek(date: DateTime): DateTime {
+    return date.startOf('week');
+  }
+
+   /** Navigate to previous week */
+  async function handlePreviousWeek() {
+    const newDate = currentDate.minus({ weeks: 1 });
+    setCurrentDate(newDate);
+
+    try {
+      const updatedBlocks = await BabyBootcampApi.getBlocksForWeek(
+        newDate.startOf('week').toJSDate(),
+      newDate.endOf('week').toJSDate()
+      );
+      setFeedingBlocks(updatedBlocks);
+    } catch (err) {
+      console.error("Error fetching entries for previous week:", err);
+    }
+  }
+
+  /** Navigate to next week */
+  async function handleNextWeek() {
+    const newDate = currentDate.plus({ weeks: 1 });
+    setCurrentDate(newDate);
+
+    try {
+      const updatedBlocks = await BabyBootcampApi.getBlocksForWeek(
+        newDate.startOf('week').toJSDate(),
+        newDate.endOf('week').toJSDate()
+      );
+      setFeedingBlocks(updatedBlocks);
+    } catch (err) {
+      console.error("Error fetching entries for new week:", err);
+    }
+  }
 
   const startOfWeek = getStartOfWeek(currentDate);
-  const monthAndYear = startOfWeek.toLocaleString('default', { month: 'long', year: 'numeric' });
+  const monthAndYear = startOfWeek.toFormat('MMMM yyyy');
+
+  if (!infoLoaded) return 'Loading...';
 
   return (
     <div className='CalendarManager'>
-      <button onClick={handlePreviousWeek}>Previous week</button>
-      <button onClick={handleNextWeek}>Next week</button>
-      <form onSubmit={handleSubmit}>
-        <button type='submit'>Add a feeding block</button>
+      <button
+        onClick={handlePreviousWeek}
+        disabled={isSubmitting}
+      >
+        Previous week
+      </button>
+      <button
+        onClick={handleNextWeek}
+        disabled={isSubmitting}
+      >
+        Next week
+      </button>
+      <form onSubmit={handleAddBlock}>
+        <button
+          type='submit'
+          disabled={isSubmitting}
+        >
+          Add a feeding block
+        </button>
       </form>
+      {error && <div className="error">{error}</div>}
       <CalendarView
         startOfWeek={startOfWeek}
         monthAndYear={monthAndYear}
         feedingBlocks={feedingBlocks}
-        feedingEntries={feedingEntries}
-        removeFeedingBlock={removeFeedingBlock}
+        currentDate={currentDate}
+        deleteFeedingBlock={handleDeleteBlock}
         setToEliminate={setToEliminate}
+        onTimeSave={handleTimeSave}
+        onAmountSave={handleAmountSave}
       />
     </div>
   );

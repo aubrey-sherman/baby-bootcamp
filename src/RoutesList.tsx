@@ -1,11 +1,9 @@
-import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-import NavBar from "./Navigation.tsx";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Home.tsx";
 import Eat from "./Eat.tsx";
-import Sleep from "./Sleep.tsx";
 import LoginForm from "./LoginForm.tsx";
 import SignupForm from "./SignupForm.tsx";
-import { CurrentUser, SignUp, LogIn, RoutesProps } from "./types.ts";
+import { RoutesProps } from "./types.ts";
 
 /** Routes for Baby App
  *
@@ -18,7 +16,6 @@ import { CurrentUser, SignUp, LogIn, RoutesProps } from "./types.ts";
  */
 
 function RoutesList({ currentUser, signUp, logIn }: RoutesProps) {
-  console.log("* RoutesList", currentUser);
 
   return (
     <div className="RoutesList">
@@ -32,8 +29,7 @@ function RoutesList({ currentUser, signUp, logIn }: RoutesProps) {
           }
           {currentUser !== null &&
             <>
-            <Route path="/eat" element={<Eat currentUser={currentUser}/>} />
-            {/* <Route path="/sleep" element={<Sleep />} /> */}
+              <Route path="/eat" element={<Eat username={currentUser.username} babyName={currentUser.babyName} />} />
             </>
           }
           <Route path="*" element={<Navigate to="/" />} />

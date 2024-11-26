@@ -9,16 +9,14 @@ import './Navigation.css';
  * BabyApp -> Navigation
  */
 function Navigation({ currentUser, logOut }: NavigationProps) {
-  console.log("* NavBar", currentUser);
 
   function loggedInNavigation() {
     return (
-    <>
+    <div className='Navigation'>
       <Link to="/"> Home </Link>
-      <Link to="/eat"> Eat </Link>
-      <Link to="/sleep"> Sleep </Link>
-      <Link to="/logout" onClick={logOut}> Log out</Link>
-    </>
+      <Link to="/eat"> [ Enter the training gym ] </Link>
+      <Link to="/logout" onClick={logOut}> Log out </Link>
+    </div>
     );
   }
 

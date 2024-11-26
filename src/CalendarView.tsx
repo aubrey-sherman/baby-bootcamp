@@ -1,24 +1,28 @@
-import React, { useMemo } from 'react';
+import React from 'react';
+import { DateTime } from 'luxon';
 import CalendarCell from './CalendarCell';
-import { FeedingBlock, FeedingEntry } from './types';
+import { FeedingBlock } from './types';
+import TimezoneHandler from "./helpers/TimezoneHandler";
 import './CalenderView.css'
 
 type RemoveFeedingBlock = (blockId: string) => void;
 type SetToEliminate = (blockId: string) => void;
 
 type CalendarViewProps = {
-  startOfWeek: Date;
+  startOfWeek: DateTime;
   monthAndYear: string;
   feedingBlocks: FeedingBlock[];
-  feedingEntries: FeedingEntry[];
-  removeFeedingBlock: RemoveFeedingBlock;
+  currentDate: DateTime;
+  deleteFeedingBlock: RemoveFeedingBlock;
   setToEliminate: SetToEliminate;
-  // onTimeSave: (entryId: string, newEventTime: Date) => void;
-  }
+  onTimeSave: (blockId: string, entryId: string, newTime: DateTime) => void;
+  onAmountSave: (blockId: string, entryId: string, newAmount: number) => void;
+}
 
 /** Calendar component.
  *
  * Displayer's the current feeding times for a logged-in user.
+ * Uses timezone-aware date handling.
  *
  * CalendarManager -> CalendarView
  */
@@ -26,31 +30,34 @@ function CalendarView({
   startOfWeek,
   monthAndYear,
   feedingBlocks,
-  feedingEntries = [],
-  removeFeedingBlock,
+  currentDate,
+  deleteFeedingBlock,
   setToEliminate,
-  // onTimeSave
+  onTimeSave,
+  onAmountSave
  }: CalendarViewProps) {
-  console.log("* CalendarView", feedingEntries)
-  console.log('CalendarTable received feedingBlocks:', feedingBlocks);
+  const tzHandler = new TimezoneHandler();
 
-  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const daysOfWeek = Array.from({ length: 7 }, (_, i) =>
+    DateTime.fromObject({
+      weekday: (i % 7) + 1 as 1 | 2 | 3 | 4 | 5 | 6 | 7
+    })
+      .setZone(tzHandler.getCurrentUserTimezone())
+      .setLocale('en-US') // Ensures Sunday is treated as first day
+      .toFormat('EEE')
+  );
 
-  const week: Date[] = [];
-  for (let i = 0; i < 7; i++) {
-      const date = new Date(startOfWeek);
-      date.setDate(startOfWeek.getDate() + i);
-      week.push(date);
-  }
+  const week = Array.from({ length: 7 }, (_, i) =>
+    startOfWeek.plus({ days: i })
+  );
 
   /** Handles table cell click for removing a block. */
-  function handleClick(evt: React.MouseEvent<HTMLTableCellElement>) {
-    console.debug("Clicked element:", evt);
-    const target = evt.target as HTMLElement;
-    console.debug("target=", target);
-    const blockId = target.getAttribute('data-block-id');
+  function handleClickToDelete(evt: React.MouseEvent) {
+    const targetTd = evt.currentTarget.closest('td');
+    const blockId = targetTd?.getAttribute('data-block-id');
+
     if (blockId && window.confirm(`Are you sure you want to remove this block?`)) {
-      removeFeedingBlock(blockId);
+      deleteFeedingBlock(blockId);
     }
   }
 
@@ -62,22 +69,21 @@ function CalendarView({
   function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
 
-    // return only blocks with isEliminating set to true
     const currentBlocksToEliminate = feedingBlocks.filter(
-      (feedingBlock) => feedingBlock.isEliminating === true);
+      (feedingBlock) => feedingBlock.isEliminating === true
+    );
 
     // if there are any blocks already set to be eliminated
     if (currentBlocksToEliminate.length > 0) {
-      console.log("You can only eliminate one block at a time.");
+      // console.warn("You can only eliminate one block at a time.");
     } else {
       const td = evt.currentTarget.closest('td');
-      console.debug("td found", td);
       const blockId = td?.getAttribute('data-block-id');
 
       if (blockId) {
         setToEliminate(blockId);
       } else {
-        console.warn('No corresponding row found.');
+        // console.warn('No corresponding row found.');
       }
     }
   }
@@ -85,44 +91,80 @@ function CalendarView({
   return (
     <div>
       <h2>{monthAndYear}</h2>
-        <table>
+      <div className="calendar-container">
+        <table className="calendar-table">
           <thead>
             <tr>
-              <th>Night Feeding</th>
-              {daysOfWeek.map((day, index) => (
-                <th key={index}>{day}</th>
+              {/* <th>Night Feeding</th> */}
+              <th>
+                <div className='cell-content header-content'>
+                  <span className='truncate'>Night Feeding</span>
+                </div>
+              </th>
+              {week.map((date) => (
+                <th key={date.toISO()}>
+                  <div className='cell-content header-content'>
+                    <span className="truncate">
+                      {date.toFormat('EEE')}<br />
+                      {date.toFormat('M/d')}
+                    </span>
+                  </div>
+                </th>
               ))}
             </tr>
           </thead>
           <tbody>
             {feedingBlocks.length > 0 ? (
-              feedingBlocks.map((feedingBlock: FeedingBlock) => (
-                <tr key={feedingBlock.id} className={feedingBlock.isEliminating ? "eliminating" : "not-eliminating"}>
-                  <td onClick={handleClick} data-block-id={feedingBlock.id}>
-                    {feedingBlock.number}
-                    <form onSubmit={handleSubmit}>
-                      <button type='submit'>Eliminate this block?</button>
-                    </form>
+              feedingBlocks
+                  .sort((a, b) => a.number - b.number)
+                  .map((feedingBlock: FeedingBlock) => (
+                    <tr key={feedingBlock.id} className={feedingBlock.isEliminating ? "eliminating" : "not-eliminating"}>
+                      <td data-block-id={feedingBlock.id}>
+                        <div className='cell-content data-content'>
+                          <span className="truncate">
+                            <svg onClick={handleClickToDelete} xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="delete-icon bi bi-trash3-fill" viewBox="0 0 16 16">
+                              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                            </svg>
+                            {feedingBlock.number}
+                            <form onSubmit={handleSubmit}>
+                              <button type='submit'>Eliminate this block?</button>
+                            </form>
+                          </span>
+                        </div>
+                      </td>
+                      {week.map((date) => {
+                        const entry = feedingBlock.feedingEntries?.find(entry => {
+                          const entryDate = tzHandler.parseToUserTimezone(entry.feedingTime);
+                          const dateToMatch = date;
+
+                          return entryDate.hasSame(dateToMatch, 'day');
+                        });
+
+                        return (
+                          <CalendarCell
+                            key={date.toISO()}
+                            date={date}
+                            currentDate={currentDate}
+                            feedingEntry={entry}
+                            onTimeSave={onTimeSave}
+                            onAmountSave={onAmountSave}
+                          />
+                        );
+                      })}
+                    </tr>
+                  ))
+              ) : (
+                <tr>
+                  <td colSpan={daysOfWeek.length + 1} style={{ textAlign: 'center' }}>
+                    Your baby is sleeping through the night!
                   </td>
-                  {week.map((date) => (
-                    <CalendarCell
-                      key={date.toISOString()}
-                      date={date.getDate()}
-                    />
-                  ))}
                 </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={daysOfWeek.length+1} style={{ textAlign: 'center' }}>
-                Your baby is sleeping through the night!
-              </td>
-            </tr>
-          )}
-          </tbody>
+              )}
+           </tbody>
         </table>
+      </div>
     </div>
-    );
+  );
 };
 
 export default CalendarView;
