@@ -18,11 +18,11 @@
   display: flex;
   font-size: 10px;
   align-items: center;
-  gap: 2px;
+  gap: 1px;
 }
 
 .time-select {
-  padding: 0.25px;
+  padding: 0px;
   width: 40px;
   text-align: center;
   border: 1px solid #e1e1e1;

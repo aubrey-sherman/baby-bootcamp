@@ -51,8 +51,16 @@
   font-size: 0.875rem;
 }
 
+.eliminating {
+  background-color: #dbeae8;
+}
+
 .data-content {
   font-size: 1.125rem;
+}
+
+svg {
+  cursor: pointer;
 }
 
 /* TODO: Rename this class; not being truncated! */
