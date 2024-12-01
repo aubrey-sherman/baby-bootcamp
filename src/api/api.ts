@@ -1,4 +1,4 @@
-const BASE_URL =import.meta.env.VITE_REACT_APP_BASE_URL || 'http://localhost:3001';
+const BASE_URL = import.meta.env.VITE_BASE_URL || 'http://localhost:3001';
 
 import { DateTime } from 'luxon';
 import TimezoneHandler from '../helpers/TimezoneHandler.ts';
@@ -18,6 +18,8 @@ class BabyBootcampApi {
     method = "GET",
   ) {
     const url = new URL(`${BASE_URL}/${endpoint}`);
+    console.log("Attempting to fetch from:", url.toString());
+    console.log("With data:", data);
     const timezone = this.tzHandler.getCurrentUserTimezone().toString();
 
     const headers = {
