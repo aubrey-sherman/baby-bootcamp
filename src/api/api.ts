@@ -1,5 +1,4 @@
-// FIXME: add VITE_REACT... value in env
-const BASE_URL = import.meta.env.VITE_REACT_APP_BASE_URL || 'http://localhost:3001';
+const BASE_URL =import.meta.env.VITE_REACT_APP_BASE_URL || 'http://localhost:3001';
 
 import { DateTime } from 'luxon';
 import TimezoneHandler from '../helpers/TimezoneHandler.ts';
