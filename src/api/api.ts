@@ -85,7 +85,6 @@ class BabyBootcampApi {
       (a: FeedingBlock, b: FeedingBlock) => a.number - b.number);
   }
 
-  // In your API class
   /** Get blocks with their entries for a specific week.
   *
   * Returns array of blocks, each with their filtered entries for the week.
@@ -102,6 +101,20 @@ class BabyBootcampApi {
     );
 
     return response.blocks;
+  }
+
+  /** Sets isEliminating value to true for a specified block. */
+  static async updateIsEliminating(isEliminating: boolean = true, blockId: string) {
+    const response = await this.request(
+      `feeding-routes/blocks/${blockId}`,
+      { isEliminating },
+      "PATCH"
+    );
+
+    return {
+      ...response.block,
+      feedingEntries: response.block.feedingEntries
+    }
   }
 
   /** Create a new feeding block with initial entries.
@@ -143,7 +156,54 @@ class BabyBootcampApi {
       "PATCH"
     )
 
-    return response.block;
+    return {
+      ...response.block,
+      feedingEntries: response.block.feedingEntries
+    };
+  }
+
+  /** Sets a given date as the starting point for block elimination logic.
+   *
+   * Returns the updated block.
+   */
+  /** Sets start date for elimination of a feeding block */
+  static async setStartDateForElimination(
+    baselineVolume: number,
+    blockId: string,
+    startDate: DateTime) {
+
+    const formattedTime = this.tzHandler.prepareDateForApi(startDate.toJSDate());
+
+    const response = await this.request(
+      `feeding-routes/blocks/${blockId}/elimination`,
+      { startDate: formattedTime, baselineVolume},
+      "POST"
+    );
+
+    return {
+      ...response.block,
+      feedingEntries: response.block.feedingEntries
+    };
+  }
+
+  /** Saves feeding amount.
+   *
+   * For non-eliminating blocks, updated volume will apply to current and subsequent entries.
+   * For eliminating block, volume becomes the new baseline for elimination logic.
+   *
+   * Returns the updated block with entries for the current week.
+   */
+  static async updateFeedingAmount(volumeInOunces: number, entryId: string) {
+    let response = await this.request(
+      `feeding-routes/entries/${entryId}/volume`,
+      { volumeInOunces },
+      "PATCH"
+    );
+
+    return {
+      ...response.block,
+      feedingEntries: response.block.feedingEntries
+    };
   }
 
   /**  Register a user with data from sign up form. Returns a token on success. */

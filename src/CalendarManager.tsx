@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { DateTime } from 'luxon';
-import { FeedingBlock } from './types.ts'
+import { FeedingBlock } from './types.ts';
+import { FeedingEntry } from './types.ts';
 import CalendarView from "./CalendarView.tsx";
 import BabyBootcampApi from "./api/api.ts";
 import TimezoneHandler from "./helpers/TimezoneHandler.ts";
+import { VolumeIcon } from "lucide-react";
 
 /** CalendarManager handles the logic for the calender view.
  *
@@ -37,7 +39,7 @@ function CalendarManager() {
     fetchBlocksWithEntries();
   }, []);
 
-  // Logic for blocks
+  // *** Logic for blocks *** //
 
   /** Handles the creation of a new feeding block. */
   async function handleAddBlock(evt: React.FormEvent<HTMLFormElement>) {
@@ -71,20 +73,47 @@ function CalendarManager() {
     }
   }
 
-  /** Changes the isEliminating property of a specific block to true. */
-  function setToEliminate(blockId: string) {
-    const updatedBlocks = feedingBlocks.map((block) => {
-      if (block.id === blockId) {
-        return { ...block, isEliminating: true};
-      }
+  /** Changes the isEliminating property of a specific block to true.
+  */
+  async function setToEliminate(blockId: string) {
+    if (!blockId) {
+      console.error('Id required for update.')
+      return;
+    }
 
-      return block;
-    });
-    // setCurrentFeedingBlocks(updatedBlocks);
+    const previousBlocks = [...feedingBlocks];
+
+    try {
+      await BabyBootcampApi.updateIsEliminating(true, blockId);
+      const blocksAndEntries = await BabyBootcampApi.getUserBlocksWithEntries();
+      setFeedingBlocks(blocksAndEntries);
+    } catch (error) {
+      console.error("Update failed:", error);
+    }
   }
+
+  /** Sets the date to start decreasing the feeding amount for a block. */
+  async function handleSetEliminationStart(entry: FeedingEntry) {
+    try {
+      const dateTime = DateTime.fromISO(entry.feedingTime);
+
+      await BabyBootcampApi.setStartDateForElimination(
+        entry.volumeInOunces ?? 0,
+        entry.blockId,
+        dateTime
+      );
+
+      const blocksAndEntries = await BabyBootcampApi.getUserBlocksWithEntries();
+      setFeedingBlocks(blocksAndEntries);
+    } catch (err) {
+      console.error("Failed to set elimination start:", err);
+    }
+  }
+
 
   // Logic for entries
 
+  // FIXME: Is entryId needed for this function?
   /** Handles time updates for feeding entries. When a user saves a new time, this
    * and all subsequent entries in the row are updated.
    *
@@ -114,24 +143,24 @@ function CalendarManager() {
     }
   }
 
-  /** Handles amount updates for feeding entries.
-   *
-   * If API call fails, re-renders with the previous state.
-   */
+  /** Handles amount updates for feeding entries. */
   async function handleAmountSave(blockId: string, entryId: string, newAmount: number) {
+    try {
+      const updatedBlock = await BabyBootcampApi.updateFeedingAmount(newAmount, entryId);
+      setFeedingBlocks(blocks =>
+        blocks.map(block =>
+          block.id === blockId ? updatedBlock : block
+        )
+      );
 
-    // NOTE: will need to convert from string to number since data is coming from a form
-    // try {
-    //   const updatedBlock = await BabyBootcampApi.updateAmount(blockId, entryId, newAmount);
-
-    //   setFeedingBlocks(prevBlocks =>
-    //     prev
-    //   )
-    // }
+      const blocksAndEntries = await BabyBootcampApi.getUserBlocksWithEntries();
+      setFeedingBlocks(blocksAndEntries);
+    } catch (err) {
+      console.error("Failed to update amount:", err);
+    }
   }
 
-
-  // Navigation
+  // *** Navigation for calendar ***
 
   /** Gets the start of the week (Sunday) for a given date. */
   function getStartOfWeek(date: DateTime): DateTime {
@@ -173,8 +202,6 @@ function CalendarManager() {
   const startOfWeek = getStartOfWeek(currentDate);
   const monthAndYear = startOfWeek.toFormat('MMMM yyyy');
 
-  if (!infoLoaded) return 'Loading...';
-
   return (
     <div className='CalendarManager'>
       <button
@@ -204,6 +231,7 @@ function CalendarManager() {
         feedingBlocks={feedingBlocks}
         currentDate={currentDate}
         deleteFeedingBlock={handleDeleteBlock}
+        onSetEliminationStart={handleSetEliminationStart}
         setToEliminate={setToEliminate}
         onTimeSave={handleTimeSave}
         onAmountSave={handleAmountSave}

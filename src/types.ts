@@ -3,7 +3,8 @@ type FeedingEntry = {
   username: string,
   feedingTime: Date,
   volumeInOunces: number,
-  blockId: string
+  blockId: string,
+
 };
 
 type RegisterParams = {
@@ -51,6 +52,9 @@ type FeedingBlock = {
   number: number;
   isEliminating: boolean;
   username: string;
+  eliminationStartDate: Date;
+  baselineVolume: number;
+  currentGroup: number;
   feedingEntries?: FeedingEntry[];
 };
 
