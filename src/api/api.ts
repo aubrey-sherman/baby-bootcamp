@@ -18,8 +18,6 @@ class BabyBootcampApi {
     method = "GET",
   ) {
     const url = new URL(`${BASE_URL}/${endpoint}`);
-    console.log("Attempting to fetch from:", url.toString());
-    console.log("With data:", data);
     const timezone = this.tzHandler.getCurrentUserTimezone().toString();
 
     const headers = {

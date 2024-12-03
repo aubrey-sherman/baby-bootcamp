@@ -64,7 +64,9 @@ function SignupForm({ signUp }: tSignUp) {
         </div>
 
         <div className="form-group row align-items-center mb-3">
-          <label htmlFor="password-input" className="col-sm-4 col-form-label">Password</label>
+          <label htmlFor="password-input" className="col-sm-4 col-form-label">
+            Password (must be between 5-20 characters.)
+          </label>
           <div className="col-sm-8">
             <input
               type="password"
@@ -77,7 +79,9 @@ function SignupForm({ signUp }: tSignUp) {
         </div>
 
         <div className="form-group row align-items-center mb-3">
-          <label htmlFor="first-name-input" className="col-sm-4 col-form-label">First name</label>
+          <label htmlFor="first-name-input" className="col-sm-4 col-form-label">
+            First name (must be between 1-100 characters).
+          </label>
           <div className="col-sm-8">
             <input
               id="first-name-input"
@@ -90,7 +94,9 @@ function SignupForm({ signUp }: tSignUp) {
         </div>
 
         <div className="form-group row align-items-center mb-3">
-          <label htmlFor="last-name-input" className="col-sm-4 col-form-label">Last name</label>
+          <label htmlFor="last-name-input" className="col-sm-4 col-form-label">
+            Last name (must be between 1-100 characters).
+          </label>
           <div className="col-sm-8">
             <input
               id="last-name-input"
@@ -103,7 +109,9 @@ function SignupForm({ signUp }: tSignUp) {
         </div>
 
         <div className="form-group row align-items-center mb-3">
-          <label htmlFor="last-name-input" className="col-sm-4 col-form-label">Your baby's name ❤️</label>
+          <label htmlFor="last-name-input" className="col-sm-4 col-form-label">
+            Your baby's name ❤️ (must be between 2-100 characters).
+          </label>
           <div className="col-sm-8">
             <input
               id="last-name-input"
@@ -116,7 +124,9 @@ function SignupForm({ signUp }: tSignUp) {
         </div>
 
         <div className="form-group row align-items-center mb-3">
-          <label htmlFor="email-input" className="col-sm-4 col-form-label">Email</label>
+          <label htmlFor="email-input" className="col-sm-4 col-form-label">
+            Email (must be between 6-100 characters and a valid address).
+          </label>
           <div className="col-sm-8">
             <input
               id="email-input"
