@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import Alert from "./Alert.tsx";
-import { tSignUp, tRegisterParams } from "./types.ts";
+import { SignUp, RegisterParams } from "./types.ts";
 
 /** Sign-up form for Baby Bootcamp
  *
@@ -11,17 +11,18 @@ import { tSignUp, tRegisterParams } from "./types.ts";
  * RoutesList -> SignupForm -> Alert
 */
 
-function SignupForm({ signUp }: tSignUp) {
+function SignupForm({ signUp }: SignUp) {
   const navigate = useNavigate();
   const defaultFormData = {
     username: "",
     password: "",
     firstName: "",
     lastName: "",
-    email: ""
+    email: "",
+    babyName: ""
   };
   const [formData, setFormData] = useState(defaultFormData);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState<string[]>([]);
 
   /** Update formData as user types into form fields */
   function handleChange(evt: React.ChangeEvent<HTMLInputElement>) {
@@ -37,10 +38,8 @@ function SignupForm({ signUp }: tSignUp) {
       await signUp(formData);
       navigate('/')
 
-    }
-    // FIXME: typing for errors array
-    catch (errs: any) {
-      setErrors(errs);
+    } catch (errors: any) {
+      setErrors(errors);
     }
   }
 
@@ -51,7 +50,9 @@ function SignupForm({ signUp }: tSignUp) {
       <form onSubmit={handleSubmit}>
 
         <div className="form-group row align-items-center mb-3">
-          <label htmlFor="username-input" className="col-sm-4 col-form-label">Username</label>
+          <label htmlFor="username-input" className="col-sm-4 col-form-label">
+            Username (must be between 1 and 30 characters).
+          </label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -114,7 +115,7 @@ function SignupForm({ signUp }: tSignUp) {
           </label>
           <div className="col-sm-8">
             <input
-              id="last-name-input"
+              id="baby-name-input"
               type="text"
               name="babyName"
               className="form-control"
@@ -139,7 +140,7 @@ function SignupForm({ signUp }: tSignUp) {
         </div>
 
           <button type="submit" className="btn btn-dark">Submit</button>
-        {errors.length > 0 && <Alert messageStyle="alert alert-danger" messages={errors} />}
+        {errors.length > 0 && <Alert messages={errors} />}
       </form>
 
     </div>

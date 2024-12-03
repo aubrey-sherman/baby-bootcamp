@@ -1,4 +1,8 @@
-import { v4 as uuid } from "uuid";
+import './Alert.css';
+
+type AlertProps = {
+  messages: string[];
+}
 
 /** Shows alerts from forms.
  *
@@ -8,10 +12,11 @@ import { v4 as uuid } from "uuid";
  * {LoginForm, SignupForm} -> Alert
  *
  */
-function Alert({ messages, messageStyle }) {
+function Alert({ messages }: AlertProps) {
   return (
-    <div className={messageStyle}>
-      {messages.map(message => <p key={message}>{message}</p>)}
+    <div className='Alert'>
+      {messages.map(
+        message => <p key={message}>{message}</p>)}
     </div>
   );
 }
