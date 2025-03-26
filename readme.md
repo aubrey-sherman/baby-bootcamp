@@ -1,28 +1,26 @@
 ## Baby Bootcamp
 
-Baby Bootcamp is a companion tool to support parents who follow Suzy Giordano's "The Limited Crying Solution", a popular sleep-training program. The app automates the tracking and calculations needed to gradually eliminate night feedings, making it easier for parents to implement this critical component of Giordano's sleep plan.
+Baby Bootcamp is a companion tool to support parents who follow Suzy Giordano's "The Limited Crying Solution", a popular sleep-training program.
 
-### Directions to Run Locally
+The app automates the tracking and calculations needed to gradually eliminate night feedings, making it easier for (likely sleep-deprived!) parents to implement this critical component of Giordano's sleep plan.
 
-NOTE: You will need to also set up the back-end app and database. To do so, follow the steps here:
+**Feature highlights and demo coming soon**
 
-1. Clone the repository
+Tech Stack: TypeScript, React, Express, Node.js, Luxon, and Drizzle ORM.
 
-<!-- add code snippet -->
+### Directions to run locally
 
-2. Run `npm install`
+NOTE: You will need to also set up the back-end app and database. Directions for this coming soon!
 
-3. Create an .env file to hold configuration
+1. Clone the repository: `gh repo clone aubrey-sherman/baby-bootcamp-fe`
 
-Add the following variables to your .env:
+2. Inside the top-level directory of the project, run `npm install`
 
-<!-- add code snippet -->
+3. Start the server with `npm start`. This should also open the app in your default browser automatically, courtesy of Vite's development server!
 
-5. Start the server
+### Directions for running commands in the shell
 
-6. Open in browser
-
-4. Run `npm run <add command from below>`:
+`npm run <add command from below>`:
 
 | Command     | Description          |
 |-------------|----------------------|
