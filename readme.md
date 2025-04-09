@@ -6,7 +6,7 @@ The app automates the tracking and calculations needed to gradually eliminate ni
 
 **Feature highlights and demo coming soon**
 
-Front-End Tech Stack: TypeScript, React, Express, Node.js, Luxon, and Drizzle ORM.
+Front-End Tech Stack: TypeScript, React, Node.js, Luxon
 
 ### Directions to run locally
 
