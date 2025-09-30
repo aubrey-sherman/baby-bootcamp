@@ -1,6 +1,6 @@
+import { Container, Box, Typography } from '@mui/material';
 import CalendarManager from "./CalendarManager.tsx";
 import { EatProps } from './types.ts';
-import './Eat.css';
 
 /** Presentational component that renders calendar.
  *
@@ -9,12 +9,14 @@ import './Eat.css';
 function Eat({ username, babyName }: EatProps) {
 
   return (
-    <div className="Eat">
-    <p>Feeding Calendar for {babyName}</p>
-    <CalendarManager
-      username={username}
-    />
-    </div>
+    <Container maxWidth="xl">
+      <Box sx={{ py: 3 }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Feeding Calendar for {babyName}
+        </Typography>
+        <CalendarManager />
+      </Box>
+    </Container>
   )
 }
 

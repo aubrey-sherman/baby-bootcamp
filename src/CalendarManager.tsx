@@ -1,11 +1,20 @@
 import { useState, useEffect } from "react";
 import { DateTime } from 'luxon';
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Alert,
+  Snackbar,
+  CircularProgress,
+  Stack,
+} from '@mui/material';
+import { NavigateBefore, NavigateNext, Add } from '@mui/icons-material';
 import { FeedingBlock } from './types.ts';
 import { FeedingEntry } from './types.ts';
 import CalendarView from "./CalendarView.tsx";
 import BabyBootcampApi from "./api/api.ts";
 import TimezoneHandler from "./helpers/TimezoneHandler.ts";
-import { VolumeIcon } from "lucide-react";
 
 /** CalendarManager handles the logic for the calender view.
  *
@@ -20,6 +29,7 @@ function CalendarManager() {
   const [infoLoaded, setInfoLoaded] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [submittingId, setSubmittingId] = useState<string | null>(null);
   const [currentDate, setCurrentDate] = useState(
     DateTime.now()
@@ -49,6 +59,7 @@ function CalendarManager() {
       try {
         const newBlock = await BabyBootcampApi.createBlockWithEntries();
         setFeedingBlocks([...feedingBlocks, newBlock])
+        setSuccessMessage('Feeding block created successfully!');
       } catch (err) {
         setError(Array.isArray(err) ? err[0] : 'Failed to create block');
       } finally {
@@ -66,6 +77,7 @@ function CalendarManager() {
       await BabyBootcampApi.deleteBlock(blockId);
       const updatedBlocks = await BabyBootcampApi.getUserBlocksWithEntries();
       setFeedingBlocks(updatedBlocks);
+      setSuccessMessage('Feeding block deleted successfully!');
     } catch (err) {
       setError(Array.isArray(err) ? err[0] : 'Failed to delete block');
     } finally {
@@ -95,7 +107,7 @@ function CalendarManager() {
   /** Sets the date to start decreasing the feeding amount for a block. */
   async function handleSetEliminationStart(entry: FeedingEntry) {
     try {
-      const dateTime = DateTime.fromISO(entry.feedingTime);
+      const dateTime = DateTime.fromISO(entry.feedingTime.toString());
 
       await BabyBootcampApi.setStartDateForElimination(
         entry.volumeInOunces ?? 0,
@@ -202,41 +214,76 @@ function CalendarManager() {
   const startOfWeek = getStartOfWeek(currentDate);
   const monthAndYear = startOfWeek.toFormat('MMMM yyyy');
 
+  if (!infoLoaded) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
-    <div className='CalendarManager'>
-      <button
-        onClick={handlePreviousWeek}
-        disabled={isSubmitting}
+    <Box sx={{ p: 2 }}>
+      <Stack spacing={3}>
+        <Stack direction="row" spacing={2} alignItems="center" flexWrap="wrap">
+          <ButtonGroup variant="contained" disabled={isSubmitting}>
+            <Button
+              onClick={handlePreviousWeek}
+              startIcon={<NavigateBefore />}
+            >
+              Previous week
+            </Button>
+            <Button
+              onClick={handleNextWeek}
+              endIcon={<NavigateNext />}
+            >
+              Next week
+            </Button>
+          </ButtonGroup>
+
+          <form onSubmit={handleAddBlock}>
+            <Button
+              type='submit'
+              variant="contained"
+              color="secondary"
+              disabled={isSubmitting}
+              startIcon={isSubmitting ? <CircularProgress size={20} /> : <Add />}
+            >
+              Add a feeding block
+            </Button>
+          </form>
+        </Stack>
+
+        {error && (
+          <Alert severity="error" onClose={() => setError(null)}>
+            {error}
+          </Alert>
+        )}
+
+        <CalendarView
+          startOfWeek={startOfWeek}
+          monthAndYear={monthAndYear}
+          feedingBlocks={feedingBlocks}
+          currentDate={currentDate}
+          deleteFeedingBlock={handleDeleteBlock}
+          onSetEliminationStart={handleSetEliminationStart}
+          setToEliminate={setToEliminate}
+          onTimeSave={handleTimeSave}
+          onAmountSave={handleAmountSave}
+        />
+      </Stack>
+
+      <Snackbar
+        open={!!successMessage}
+        autoHideDuration={3000}
+        onClose={() => setSuccessMessage(null)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        Previous week
-      </button>
-      <button
-        onClick={handleNextWeek}
-        disabled={isSubmitting}
-      >
-        Next week
-      </button>
-      <form onSubmit={handleAddBlock}>
-        <button
-          type='submit'
-          disabled={isSubmitting}
-        >
-          Add a feeding block
-        </button>
-      </form>
-      {error && <div className="error">{error}</div>}
-      <CalendarView
-        startOfWeek={startOfWeek}
-        monthAndYear={monthAndYear}
-        feedingBlocks={feedingBlocks}
-        currentDate={currentDate}
-        deleteFeedingBlock={handleDeleteBlock}
-        onSetEliminationStart={handleSetEliminationStart}
-        setToEliminate={setToEliminate}
-        onTimeSave={handleTimeSave}
-        onAmountSave={handleAmountSave}
-      />
-    </div>
+        <Alert severity="success" onClose={() => setSuccessMessage(null)}>
+          {successMessage}
+        </Alert>
+      </Snackbar>
+    </Box>
   );
 };
 

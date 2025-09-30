@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DateTime } from 'luxon';
+import {
+  TableCell,
+  Box,
+  IconButton,
+  Tooltip,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Stack,
+} from '@mui/material';
+import { Star, Edit } from '@mui/icons-material';
 import FeedingTimeCell from './FeedingTimeCell';
 import { FeedingEntry } from './types';
 import FeedingAmountCell from './FeedingAmountCell';
 import TimezoneHandler from './helpers/TimezoneHandler';
-import './CalendarCell.css';
 
 type CalendarCellProps = {
   isEliminating?: boolean;
@@ -41,49 +52,95 @@ function CalendarCell({
 }: CalendarCellProps) {
 
   const tzHandler = new TimezoneHandler();
+  const [editModalOpen, setEditModalOpen] = useState(false);
+
+  const handleOpenModal = () => setEditModalOpen(true);
+  const handleCloseModal = () => setEditModalOpen(false);
 
   return (
-    <td className={currentDate.hasSame(DateTime.now(), 'day') ? 'current-day' : ''}>
-      <div>
-        {feedingEntry ? (
-          <div className="feeding-entry">
-          { isEliminating &&
-            <button
-              onClick={() => onSetEliminationStart?.(feedingEntry)}
-              className="elimination-start-icon"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-star-fill" viewBox="0 0 16 16">
-                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-              </svg>
-              Start counting down here
-            </button>
-          }
+    <>
+      <TableCell
+        sx={{
+          bgcolor: currentDate.hasSame(DateTime.now(), 'day') ? 'action.hover' : 'inherit',
+          p: 1,
+          borderLeft: '2px solid',
+          borderColor: 'divider',
+          cursor: feedingEntry ? 'pointer' : 'default',
+          '&:hover': feedingEntry ? {
+            bgcolor: 'action.hover',
+          } : {},
+        }}
+      >
+        <Box>
+          {feedingEntry ? (
+            <Box onClick={handleOpenModal}>
+              <Stack spacing={0.5} alignItems="center">
+                {isEliminating && (
+                  <Tooltip title="Mark this entry as the elimination start point">
+                    <IconButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onSetEliminationStart?.(feedingEntry);
+                      }}
+                      size="small"
+                      color="warning"
+                    >
+                      <Star fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                )}
+                <Typography variant="body2" fontWeight="medium">
+                  {tzHandler.parseToUserTimezone(feedingEntry.feedingTime).toFormat('h:mm a')}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {feedingEntry.volumeInOunces?.toFixed(2) || '0.00'} oz
+                </Typography>
+                <IconButton size="small" color="primary">
+                  <Edit fontSize="small" />
+                </IconButton>
+              </Stack>
+            </Box>
+          ) : (
+            <Box textAlign="center" onClick={handleOpenModal}>
+              <IconButton size="small" color="primary">
+                <Edit fontSize="small" />
+              </IconButton>
+              <Typography variant="caption" color="text.secondary">
+                Add entry
+              </Typography>
+            </Box>
+          )}
+        </Box>
+      </TableCell>
+
+      <Dialog open={editModalOpen} onClose={handleCloseModal} maxWidth="sm" fullWidth>
+        <DialogTitle>
+          {feedingEntry ? 'Edit Feeding Entry' : 'Add Feeding Entry'}
+        </DialogTitle>
+        <DialogContent>
+          <Stack spacing={3} sx={{ mt: 1 }}>
             <FeedingTimeCell
-              feedingTime={tzHandler.parseToUserTimezone(feedingEntry.feedingTime)}
-              onTimeSave={onTimeSave}
-              entryId={feedingEntry.id}
-              blockId={feedingEntry.blockId}
+              feedingTime={feedingEntry ? tzHandler.parseToUserTimezone(feedingEntry.feedingTime) : undefined}
+              onTimeSave={(blockId, entryId, newTime) => {
+                onTimeSave(blockId, entryId, newTime);
+                handleCloseModal();
+              }}
+              entryId={feedingEntry?.id}
+              blockId={feedingEntry?.blockId}
             />
             <FeedingAmountCell
-              volumeInOunces={feedingEntry.volumeInOunces ? feedingEntry.volumeInOunces : 0}
-              onAmountSave={onAmountSave}
-              entryId={feedingEntry.id}
-              blockId={feedingEntry.blockId}
+              volumeInOunces={feedingEntry?.volumeInOunces || 0}
+              onAmountSave={(blockId, entryId, newAmount) => {
+                onAmountSave(blockId, entryId, newAmount);
+                handleCloseModal();
+              }}
+              entryId={feedingEntry?.id}
+              blockId={feedingEntry?.blockId}
             />
-          </div>
-        ) : (
-          <div>
-            <FeedingTimeCell
-              feedingTime={undefined}
-              onTimeSave={onTimeSave}
-            />
-            <FeedingAmountCell
-              onAmountSave={onAmountSave}
-            />
-          </div>
-        )}
-      </div>
-    </td>
+          </Stack>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 

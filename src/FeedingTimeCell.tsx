@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { DateTime } from 'luxon';
-// import { Clock } from 'lucide-react';
+import {
+  Box,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Button,
+  Alert,
+  Typography,
+  Stack,
+} from '@mui/material';
 import TimezoneHandler from './helpers/TimezoneHandler';
-import './FeedingTimeCell.css';
 
 type FeedingTimeCellProps = {
   blockId?: string,
@@ -110,74 +119,85 @@ function FeedingTimeCell({
   }
 
   const userTimezone = tzHandler.getCurrentUserTimezone();
-  // const timezoneName = DateTime.local().setZone(userTimezone).zoneName;
   const timezoneAbbr = DateTime.local().setZone(userTimezone).toFormat('ZZZZ');
 
   return (
-    <div className="">
+    <Box sx={{ p: 1 }}>
       <form onSubmit={handleSubmit}>
-        <div className="">
-          <div className="">
-            {/* <Clock className="clock"/> */}
-            <span className="directions timezone">Select Time in {timezoneAbbr}</span>
-          </div>
-        </div>
+        <Stack spacing={2}>
+          <Typography variant="caption" color="text.secondary">
+            Select Time in {timezoneAbbr}
+          </Typography>
 
-        <div className="time-selectors">
-          <select
-            value={hour}
-            onChange={(e) => {
-              setHour(e.target.value);
-              if (submitted) validateTime();
-            }}
-            className={`time-select ${errors.hour ? 'time-select-error' : 'border-gray-200'}`}
+          <Stack direction="row" spacing={1} alignItems="center">
+            <FormControl size="small" sx={{ minWidth: 70 }} error={!!errors.hour}>
+              <InputLabel id="hour-label">Hour</InputLabel>
+              <Select
+                labelId="hour-label"
+                value={hour}
+                label="Hour"
+                onChange={(e) => {
+                  setHour(e.target.value);
+                  if (submitted) validateTime();
+                }}
+              >
+                {hours.map(h => (
+                  <MenuItem key={h} value={h}>{h}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <Typography variant="h6">:</Typography>
+
+            <FormControl size="small" sx={{ minWidth: 70 }} error={!!errors.minute}>
+              <InputLabel id="minute-label">Min</InputLabel>
+              <Select
+                labelId="minute-label"
+                value={minute}
+                label="Min"
+                onChange={(e) => {
+                  setMinute(e.target.value);
+                  if (submitted) validateTime();
+                }}
+              >
+                {minutes.map(m => (
+                  <MenuItem key={m} value={m}>{m}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl size="small" sx={{ minWidth: 70 }}>
+              <InputLabel id="period-label">AM/PM</InputLabel>
+              <Select
+                labelId="period-label"
+                value={period}
+                label="AM/PM"
+                onChange={(e) => setPeriod(e.target.value)}
+              >
+                <MenuItem value="AM">AM</MenuItem>
+                <MenuItem value="PM">PM</MenuItem>
+              </Select>
+            </FormControl>
+          </Stack>
+
+          {errors.hour && (
+            <Alert severity="error" sx={{ py: 0.5 }}>{errors.hour}</Alert>
+          )}
+          {errors.minute && (
+            <Alert severity="error" sx={{ py: 0.5 }}>{errors.minute}</Alert>
+          )}
+
+          <Button
+            type="submit"
+            variant="contained"
+            size="small"
+            disabled={Object.keys(errors).length > 0 && submitted}
           >
-            {hours.map(h => (
-              <option key={h} value={h}>{h}</option>
-            ))}
-          </select>
-
-          <span className="time-separator">:</span>
-
-          <select
-            value={minute}
-            onChange={(e) => {
-              setMinute(e.target.value);
-              if (submitted) validateTime();
-            }}
-            className={`time-select ${errors.minute ? 'time-select-error' : ''}`}
-          >
-            {minutes.map(m => (
-              <option key={m} value={m}>{m}</option>
-            ))}
-          </select>
-
-          <select
-            value={period}
-            onChange={(e) => setPeriod(e.target.value)}
-            className="time-select"
-          >
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
-          </select>
-        </div>
-
-        {errors.hour && (
-          <div className="error-message">{errors.hour}</div>
-        )}
-        {errors.minute && (
-          <div className="error-message">{errors.minute}</div>
-        )}
-
-        <button
-          type="submit"
-          className="submit-button"
-          disabled={Object.keys(errors).length > 0 && submitted}
-        >
-          Set Time
-        </button>
+            Set Time
+          </Button>
+        </Stack>
       </form>
-    </div>
+    </Box>
   );
 }
 

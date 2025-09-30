@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import './FeedingAmountCell.css';
 import { DateTime } from 'luxon';
+import {
+  Box,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Button,
+  Stack,
+  Typography,
+} from '@mui/material';
 
 type FeedingAmountCellProps = {
   volumeInOunces?: number;
@@ -33,14 +42,14 @@ function FeedingAmountCell({
     setDecimalPart(newDecimal);
   }, [volumeInOunces]);
 
-  function handleWholeNumberChange(e: React.ChangeEvent<HTMLSelectElement>) {
+  function handleWholeNumberChange(e: any) {
     const value = e.target.value;
     if (value === '' || /^-?\d+$/.test(value)) {
       setWholeNumber(value);
     }
   };
 
-  function handleDecimalChange(e: React.ChangeEvent<HTMLSelectElement>) {
+  function handleDecimalChange(e: any) {
     const value = e.target.value;
     if (value === '' || /^\d{0,2}$/.test(value)) {
       setDecimalPart(value.padStart(2, '0'));
@@ -77,40 +86,59 @@ function FeedingAmountCell({
   }
 
   return (
-    <div className='FeedingAmountCell'>
+    <Box sx={{ p: 1 }}>
       <form onSubmit={handleSubmit}>
-        Volume in oz<br />
-        <select
-          value={wholeNumber}
-          onChange={handleWholeNumberChange}
-          className="input-right-side"
-        >
-          {wholeNumbers.map(num => (
-            <option key={num} value={num}>
-              {num}
-            </option>
-          ))}
-        </select>
+        <Stack spacing={2}>
+          <Typography variant="caption" color="text.secondary">
+            Volume in oz
+          </Typography>
 
-        <span className="decimal-point">.</span>
+          <Stack direction="row" spacing={0.5} alignItems="center">
+            <FormControl size="small" sx={{ minWidth: 60 }}>
+              <InputLabel id="whole-number-label">Oz</InputLabel>
+              <Select
+                labelId="whole-number-label"
+                value={wholeNumber}
+                label="Oz"
+                onChange={handleWholeNumberChange}
+              >
+                {wholeNumbers.map(num => (
+                  <MenuItem key={num} value={num}>
+                    {num}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
-        <select
-          value={decimalPart}
-          onChange={handleDecimalChange}
-          className="input-left-side"
-        >
-          {decimalNumbers.map(num => (
-            <option key={num} value={num}>
-              {num}
-            </option>
-          ))}
-        </select>
+            <Typography variant="h6">.</Typography>
 
-        <button type='submit' className='submit-button'>
-          Edit amount
-        </button>
+            <FormControl size="small" sx={{ minWidth: 60 }}>
+              <InputLabel id="decimal-label">Dec</InputLabel>
+              <Select
+                labelId="decimal-label"
+                value={decimalPart}
+                label="Dec"
+                onChange={handleDecimalChange}
+              >
+                {decimalNumbers.map(num => (
+                  <MenuItem key={num} value={num}>
+                    {num}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Stack>
+
+          <Button
+            type='submit'
+            variant="contained"
+            size="small"
+          >
+            Edit amount
+          </Button>
+        </Stack>
       </form>
-    </div>
+    </Box>
   )
 }
 
