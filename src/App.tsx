@@ -1,4 +1,7 @@
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import BabyApp from './BabyApp.tsx';
+import theme from './theme.ts';
 import './App.css';
 
 
@@ -13,11 +16,14 @@ import './App.css';
 function App() {
 
   return (
-    <div className="App">
-      <div className="App-content">
-        <BabyApp />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className="App">
+        <div className="App-content">
+          <BabyApp />
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 };
 
