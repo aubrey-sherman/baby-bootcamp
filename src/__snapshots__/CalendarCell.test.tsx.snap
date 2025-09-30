@@ -1,0 +1,230 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CalendarCell > renders for current day with highlighted background 1`] = `
+<div>
+  <table>
+    <tbody>
+      <tr>
+        <td
+          class="MuiTableCell-root MuiTableCell-sizeMedium css-3ir62x-MuiTableCell-root"
+        >
+          <div
+            class="MuiBox-root css-0"
+          >
+            <div
+              class="MuiBox-root css-0"
+            >
+              <div
+                class="MuiStack-root css-c4vnuj-MuiStack-root"
+              >
+                <p
+                  class="MuiTypography-root MuiTypography-body2 css-u7wczt-MuiTypography-root"
+                >
+                  9:30 AM
+                </p>
+                <p
+                  class="MuiTypography-root MuiTypography-body2 css-1l46528-MuiTypography-root"
+                >
+                  4.50
+                   oz
+                </p>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                    data-testid="EditIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`CalendarCell > renders with eliminating block and star button 1`] = `
+<div>
+  <table>
+    <tbody>
+      <tr>
+        <td
+          class="MuiTableCell-root MuiTableCell-sizeMedium css-zl1xhs-MuiTableCell-root"
+        >
+          <div
+            class="MuiBox-root css-0"
+          >
+            <div
+              class="MuiBox-root css-0"
+            >
+              <div
+                class="MuiStack-root css-c4vnuj-MuiStack-root"
+              >
+                <button
+                  aria-label="Mark this entry as the elimination start point"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorWarning MuiIconButton-sizeSmall css-xif4x-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                    data-testid="StarIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                    />
+                  </svg>
+                </button>
+                <p
+                  class="MuiTypography-root MuiTypography-body2 css-u7wczt-MuiTypography-root"
+                >
+                  9:30 AM
+                </p>
+                <p
+                  class="MuiTypography-root MuiTypography-body2 css-1l46528-MuiTypography-root"
+                >
+                  4.50
+                   oz
+                </p>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                    data-testid="EditIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`CalendarCell > renders with feeding entry 1`] = `
+<div>
+  <table>
+    <tbody>
+      <tr>
+        <td
+          class="MuiTableCell-root MuiTableCell-sizeMedium css-zl1xhs-MuiTableCell-root"
+        >
+          <div
+            class="MuiBox-root css-0"
+          >
+            <div
+              class="MuiBox-root css-0"
+            >
+              <div
+                class="MuiStack-root css-c4vnuj-MuiStack-root"
+              >
+                <p
+                  class="MuiTypography-root MuiTypography-body2 css-u7wczt-MuiTypography-root"
+                >
+                  9:30 AM
+                </p>
+                <p
+                  class="MuiTypography-root MuiTypography-body2 css-1l46528-MuiTypography-root"
+                >
+                  4.50
+                   oz
+                </p>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                    data-testid="EditIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`CalendarCell > renders without feeding entry (empty cell) 1`] = `
+<div>
+  <table>
+    <tbody>
+      <tr>
+        <td
+          class="MuiTableCell-root MuiTableCell-sizeMedium css-1igxh3i-MuiTableCell-root"
+        >
+          <div
+            class="MuiBox-root css-0"
+          >
+            <div
+              class="MuiBox-root css-xi606m"
+            >
+              <button
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                  data-testid="EditIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                  />
+                </svg>
+              </button>
+              <span
+                class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+              >
+                Add entry
+              </span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

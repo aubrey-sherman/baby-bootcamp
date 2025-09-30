@@ -1,0 +1,1213 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CalendarView > renders with eliminating block highlighted 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-0"
+  >
+    <h5
+      class="MuiTypography-root MuiTypography-h5 css-1d8if93-MuiTypography-root"
+    >
+      January 2024
+    </h5>
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiTableContainer-root css-15yen68-MuiPaper-root-MuiTableContainer-root"
+      style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+    >
+      <table
+        class="MuiTable-root css-1pe3nxw-MuiTable-root"
+      >
+        <thead
+          class="MuiTableHead-root css-1a7iywq-MuiTableHead-root"
+        >
+          <tr
+            class="MuiTableRow-root MuiTableRow-head css-i4t7hi-MuiTableRow-root"
+          >
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-t11akt-MuiTableCell-root"
+              scope="col"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-u7wczt-MuiTypography-root"
+              >
+                Day
+              </p>
+            </th>
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-1n4l99z-MuiTableCell-root"
+              scope="col"
+            >
+              <div
+                class="MuiStack-root css-aha7cr-MuiStack-root"
+              >
+                <div
+                  class="MuiBox-root css-171onha"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorError MuiIconButton-sizeSmall css-98tc68-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="DeleteIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                      />
+                    </svg>
+                  </button>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-u7wczt-MuiTypography-root"
+                  >
+                    Block 
+                    1
+                  </p>
+                </div>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-yhi2c9-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  Eliminate this block?
+                </button>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="MuiTableBody-root css-gmh7jj-MuiTableBody-root"
+        >
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Sun
+                <br />
+                1/14
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Mon
+                <br />
+                1/15
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Tue
+                <br />
+                1/16
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Wed
+                <br />
+                1/17
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Thu
+                <br />
+                1/18
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Fri
+                <br />
+                1/19
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Sat
+                <br />
+                1/20
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`CalendarView > renders with feeding blocks 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-0"
+  >
+    <h5
+      class="MuiTypography-root MuiTypography-h5 css-1d8if93-MuiTypography-root"
+    >
+      January 2024
+    </h5>
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiTableContainer-root css-15yen68-MuiPaper-root-MuiTableContainer-root"
+      style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+    >
+      <table
+        class="MuiTable-root css-1pe3nxw-MuiTable-root"
+      >
+        <thead
+          class="MuiTableHead-root css-1a7iywq-MuiTableHead-root"
+        >
+          <tr
+            class="MuiTableRow-root MuiTableRow-head css-i4t7hi-MuiTableRow-root"
+          >
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-t11akt-MuiTableCell-root"
+              scope="col"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-u7wczt-MuiTypography-root"
+              >
+                Day
+              </p>
+            </th>
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-979cqt-MuiTableCell-root"
+              scope="col"
+            >
+              <div
+                class="MuiStack-root css-aha7cr-MuiStack-root"
+              >
+                <div
+                  class="MuiBox-root css-171onha"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorError MuiIconButton-sizeSmall css-98tc68-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="DeleteIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                      />
+                    </svg>
+                  </button>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-u7wczt-MuiTypography-root"
+                  >
+                    Block 
+                    1
+                  </p>
+                </div>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-yhi2c9-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  Eliminate this block?
+                </button>
+              </div>
+            </th>
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-1n4l99z-MuiTableCell-root"
+              scope="col"
+            >
+              <div
+                class="MuiStack-root css-aha7cr-MuiStack-root"
+              >
+                <div
+                  class="MuiBox-root css-171onha"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorError MuiIconButton-sizeSmall css-98tc68-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="DeleteIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                      />
+                    </svg>
+                  </button>
+                  <p
+                    class="MuiTypography-root MuiTypography-body2 css-u7wczt-MuiTypography-root"
+                  >
+                    Block 
+                    2
+                  </p>
+                </div>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-yhi2c9-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  Eliminate this block?
+                </button>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="MuiTableBody-root css-gmh7jj-MuiTableBody-root"
+        >
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Sun
+                <br />
+                1/14
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Mon
+                <br />
+                1/15
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-1hiyerf-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-0"
+                >
+                  <div
+                    class="MuiStack-root css-c4vnuj-MuiStack-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body2 css-u7wczt-MuiTypography-root"
+                    >
+                      9:30 AM
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body2 css-1l46528-MuiTypography-root"
+                    >
+                      4.50
+                       oz
+                    </p>
+                    <button
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                        data-testid="EditIcon"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Tue
+                <br />
+                1/16
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Wed
+                <br />
+                1/17
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Thu
+                <br />
+                1/18
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Fri
+                <br />
+                1/19
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-bwzrgd-MuiTableCell-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-tpz0q1-MuiTypography-root"
+              >
+                Sat
+                <br />
+                1/20
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall css-iuuk2b-MuiTableCell-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <div
+                  class="MuiBox-root css-xi606m"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-sizeSmall css-1r61mhp-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
+                      data-testid="EditIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
+                      />
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTypography-root MuiTypography-caption css-174le52-MuiTypography-root"
+                  >
+                    Add entry
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`CalendarView > renders with no feeding blocks 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-0"
+  >
+    <h5
+      class="MuiTypography-root MuiTypography-h5 css-1d8if93-MuiTypography-root"
+    >
+      January 2024
+    </h5>
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiTableContainer-root css-15yen68-MuiPaper-root-MuiTableContainer-root"
+      style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+    >
+      <table
+        class="MuiTable-root css-1pe3nxw-MuiTable-root"
+      >
+        <thead
+          class="MuiTableHead-root css-1a7iywq-MuiTableHead-root"
+        >
+          <tr
+            class="MuiTableRow-root MuiTableRow-head css-i4t7hi-MuiTableRow-root"
+          >
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-t11akt-MuiTableCell-root"
+              scope="col"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body2 css-u7wczt-MuiTypography-root"
+              >
+                Day
+              </p>
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="MuiTableBody-root css-gmh7jj-MuiTableBody-root"
+        >
+          <tr
+            class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter MuiTableCell-sizeSmall css-10ly8ru-MuiTableCell-root"
+              colspan="1"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-t9dfj5-MuiTypography-root"
+              >
+                Your baby is sleeping through the night!
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
