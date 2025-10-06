@@ -1,15 +1,33 @@
 import { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
-import Alert from "./Alert.tsx";
-import { SignUp, RegisterParams } from "./types.ts";
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Alert,
+  Container,
+  Paper,
+  Link
+} from '@mui/material';
+import { SignUp } from "./types.ts";
 
 /** Sign-up form for Baby Bootcamp
  *
- * Props: signup function, errors like ["message1", ...]
- * State: formData, errors
+ * Props: signup function
+ * State: formData, fieldErrors, generalError
  *
- * RoutesList -> SignupForm -> Alert
+ * RoutesList -> SignupForm
 */
+
+interface FieldErrors {
+  username?: string;
+  password?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  babyName?: string;
+}
 
 function SignupForm({ signUp }: SignUp) {
   const navigate = useNavigate();
@@ -22,12 +40,21 @@ function SignupForm({ signUp }: SignUp) {
     babyName: ""
   };
   const [formData, setFormData] = useState(defaultFormData);
-  const [errors, setErrors] = useState<string[]>([]);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [generalError, setGeneralError] = useState<string>("");
 
   /** Update formData as user types into form fields */
   function handleChange(evt: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = evt.target;
     setFormData(currentData => ({ ...currentData, [name]: value }));
+    // Clear field error when user starts typing
+    if (fieldErrors[name as keyof FieldErrors]) {
+      setFieldErrors(current => ({ ...current, [name]: undefined }));
+    }
+    // Clear general error when user makes changes
+    if (generalError) {
+      setGeneralError("");
+    }
   }
 
   /** Send formData to BabyBootcampApp on form submission */
@@ -37,115 +64,169 @@ function SignupForm({ signUp }: SignUp) {
     try {
       await signUp(formData);
       navigate('/')
-
     } catch (errors: any) {
-      setErrors(errors);
+      // Try to parse field-specific errors
+      const newFieldErrors: FieldErrors = {};
+      let hasFieldError = false;
+
+      if (Array.isArray(errors)) {
+        errors.forEach((error: string) => {
+          const lowerError = error.toLowerCase();
+          if (lowerError.includes('username')) {
+            newFieldErrors.username = error;
+            hasFieldError = true;
+          } else if (lowerError.includes('password')) {
+            newFieldErrors.password = error;
+            hasFieldError = true;
+          } else if (lowerError.includes('first name') || lowerError.includes('firstname')) {
+            newFieldErrors.firstName = error;
+            hasFieldError = true;
+          } else if (lowerError.includes('last name') || lowerError.includes('lastname')) {
+            newFieldErrors.lastName = error;
+            hasFieldError = true;
+          } else if (lowerError.includes('email')) {
+            newFieldErrors.email = error;
+            hasFieldError = true;
+          } else if (lowerError.includes('baby')) {
+            newFieldErrors.babyName = error;
+            hasFieldError = true;
+          }
+        });
+
+        setFieldErrors(newFieldErrors);
+
+        // If there are errors that don't match specific fields, show as general error
+        if (!hasFieldError) {
+          setGeneralError(errors.join('. '));
+        }
+      } else {
+        setGeneralError(String(errors));
+      }
     }
   }
 
   return (
-    <div className="SignupForm">
-    <h2>Sign up for a Baby Bootcamp account</h2>
-    <p>Already have an account? Log in <Link to={'/login'}> here</Link>.</p>
-      <form onSubmit={handleSubmit}>
+    <Container maxWidth="sm">
+      <Box sx={{ mt: 4, mb: 4 }}>
+        <Paper elevation={2} sx={{ p: 4 }}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            Sign Up
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            Already have an account?{' '}
+            <Link
+              component={RouterLink}
+              to="/login"
+              sx={{
+                fontSize: '0.875rem',
+                fontWeight: 400,
+                lineHeight: 1.43
+              }}
+            >
+              Log in here
+            </Link>
+          </Typography>
 
-        <div className="form-group row align-items-center mb-3">
-          <label htmlFor="username-input" className="col-sm-4 col-form-label">
-            Username (must be between 1 and 30 characters).
-          </label>
-          <div className="col-sm-8">
-            <input
-              type="text"
-              name="username"
+          {generalError && (
+            <Alert severity="error" sx={{ mb: 3 }}>
+              {generalError}
+            </Alert>
+          )}
+
+          <Box component="form" onSubmit={handleSubmit} noValidate>
+            <TextField
+              fullWidth
+              margin="normal"
               id="username-input"
-              className="form-control"
+              name="username"
+              label="Username"
+              value={formData.username}
               onChange={handleChange}
+              error={!!fieldErrors.username}
+              helperText={fieldErrors.username || "1-30 characters"}
+              required
             />
-          </div>
-        </div>
 
-        <div className="form-group row align-items-center mb-3">
-          <label htmlFor="password-input" className="col-sm-4 col-form-label">
-            Password (must be between 5-20 characters.)
-          </label>
-          <div className="col-sm-8">
-            <input
-              type="password"
-              name="password"
+            <TextField
+              fullWidth
+              margin="normal"
               id="password-input"
-              className="form-control"
+              name="password"
+              label="Password"
+              type="password"
+              value={formData.password}
               onChange={handleChange}
+              error={!!fieldErrors.password}
+              helperText={fieldErrors.password || "5-20 characters"}
+              required
             />
-          </div>
-        </div>
 
-        <div className="form-group row align-items-center mb-3">
-          <label htmlFor="first-name-input" className="col-sm-4 col-form-label">
-            First name (must be between 1-100 characters).
-          </label>
-          <div className="col-sm-8">
-            <input
+            <TextField
+              fullWidth
+              margin="normal"
               id="first-name-input"
-              type="text"
               name="firstName"
-              className="form-control"
+              label="First Name"
+              value={formData.firstName}
               onChange={handleChange}
+              error={!!fieldErrors.firstName}
+              helperText={fieldErrors.firstName || "1-100 characters"}
+              required
             />
-          </div>
-        </div>
 
-        <div className="form-group row align-items-center mb-3">
-          <label htmlFor="last-name-input" className="col-sm-4 col-form-label">
-            Last name (must be between 1-100 characters).
-          </label>
-          <div className="col-sm-8">
-            <input
+            <TextField
+              fullWidth
+              margin="normal"
               id="last-name-input"
-              type="text"
               name="lastName"
-              className="form-control"
+              label="Last Name"
+              value={formData.lastName}
               onChange={handleChange}
+              error={!!fieldErrors.lastName}
+              helperText={fieldErrors.lastName || "1-100 characters"}
+              required
             />
-          </div>
-        </div>
 
-        <div className="form-group row align-items-center mb-3">
-          <label htmlFor="last-name-input" className="col-sm-4 col-form-label">
-            Your baby's name ❤️ (must be between 2-100 characters).
-          </label>
-          <div className="col-sm-8">
-            <input
+            <TextField
+              fullWidth
+              margin="normal"
               id="baby-name-input"
-              type="text"
               name="babyName"
-              className="form-control"
+              label="Baby's Name ❤️"
+              value={formData.babyName}
               onChange={handleChange}
+              error={!!fieldErrors.babyName}
+              helperText={fieldErrors.babyName || "2-100 characters"}
+              required
             />
-          </div>
-        </div>
 
-        <div className="form-group row align-items-center mb-3">
-          <label htmlFor="email-input" className="col-sm-4 col-form-label">
-            Email (must be between 6-100 characters and a valid address).
-          </label>
-          <div className="col-sm-8">
-            <input
+            <TextField
+              fullWidth
+              margin="normal"
               id="email-input"
-              type="email"
               name="email"
-              className="form-control"
+              label="Email"
+              type="email"
+              value={formData.email}
               onChange={handleChange}
+              error={!!fieldErrors.email}
+              helperText={fieldErrors.email || "Valid email address"}
+              required
             />
-          </div>
-        </div>
 
-          <button type="submit" className="btn btn-dark">Submit</button>
-        {errors.length > 0 && <Alert messages={errors} />}
-      </form>
-
-    </div>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+          </Box>
+        </Paper>
+      </Box>
+    </Container>
   );
-
 }
 
 export default SignupForm;
