@@ -1,0 +1,317 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Eat > renders with baby name and calendar 1`] = `
+<div>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthXl css-hhdjsd-MuiContainer-root"
+  >
+    <div
+      class="MuiBox-root css-1phy807"
+    >
+      <h1
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1mz99y6-MuiTypography-root"
+      >
+        Feeding Calendar for 
+        Baby Emma
+      </h1>
+      <div
+        class="MuiBox-root css-19midj6"
+      >
+        <div
+          class="MuiStack-root css-v2woy3-MuiStack-root"
+        >
+          <div
+            class="MuiStack-root css-15pjkai-MuiStack-root"
+          >
+            <div
+              class="MuiButtonGroup-root MuiButtonGroup-contained MuiButtonGroup-horizontal MuiButtonGroup-colorPrimary css-1ueqyvm-MuiButtonGroup-root"
+              role="group"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButtonGroup-firstButton css-a1icc8-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1v1j2p3-MuiButton-startIcon"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="NavigateBeforeIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+                    />
+                  </svg>
+                </span>
+                Previous week
+              </button>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButtonGroup-lastButton css-a1icc8-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Next week
+                <span
+                  class="MuiButton-icon MuiButton-endIcon MuiButton-iconSizeMedium css-1wyk03i-MuiButton-endIcon"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="NavigateNextIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <form>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorSecondary css-19qpome-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="submit"
+              >
+                <span
+                  class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1v1j2p3-MuiButton-startIcon"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="AddIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
+                    />
+                  </svg>
+                </span>
+                Add a feeding block
+              </button>
+            </form>
+          </div>
+          <div
+            class="MuiBox-root css-0"
+          >
+            <h5
+              class="MuiTypography-root MuiTypography-h5 css-1d8if93-MuiTypography-root"
+            >
+              September 2025
+            </h5>
+            <div
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiTableContainer-root css-15yen68-MuiPaper-root-MuiTableContainer-root"
+              style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+            >
+              <table
+                class="MuiTable-root css-1pe3nxw-MuiTable-root"
+              >
+                <thead
+                  class="MuiTableHead-root css-1a7iywq-MuiTableHead-root"
+                >
+                  <tr
+                    class="MuiTableRow-root MuiTableRow-head css-i4t7hi-MuiTableRow-root"
+                  >
+                    <th
+                      class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-t11akt-MuiTableCell-root"
+                      scope="col"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body2 css-u7wczt-MuiTypography-root"
+                      >
+                        Day
+                      </p>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  class="MuiTableBody-root css-gmh7jj-MuiTableBody-root"
+                >
+                  <tr
+                    class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+                  >
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter MuiTableCell-sizeSmall css-10ly8ru-MuiTableCell-root"
+                      colspan="1"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-t9dfj5-MuiTypography-root"
+                      >
+                        Your baby is sleeping through the night!
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Eat > renders with different baby name 1`] = `
+<div>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthXl css-hhdjsd-MuiContainer-root"
+  >
+    <div
+      class="MuiBox-root css-1phy807"
+    >
+      <h1
+        class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1mz99y6-MuiTypography-root"
+      >
+        Feeding Calendar for 
+        Baby Oliver
+      </h1>
+      <div
+        class="MuiBox-root css-19midj6"
+      >
+        <div
+          class="MuiStack-root css-v2woy3-MuiStack-root"
+        >
+          <div
+            class="MuiStack-root css-15pjkai-MuiStack-root"
+          >
+            <div
+              class="MuiButtonGroup-root MuiButtonGroup-contained MuiButtonGroup-horizontal MuiButtonGroup-colorPrimary css-1ueqyvm-MuiButtonGroup-root"
+              role="group"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButtonGroup-firstButton css-a1icc8-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1v1j2p3-MuiButton-startIcon"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="NavigateBeforeIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+                    />
+                  </svg>
+                </span>
+                Previous week
+              </button>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContainedPrimary MuiButtonGroup-lastButton css-a1icc8-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Next week
+                <span
+                  class="MuiButton-icon MuiButton-endIcon MuiButton-iconSizeMedium css-1wyk03i-MuiButton-endIcon"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="NavigateNextIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <form>
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorSecondary css-19qpome-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="submit"
+              >
+                <span
+                  class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-1v1j2p3-MuiButton-startIcon"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                    data-testid="AddIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
+                    />
+                  </svg>
+                </span>
+                Add a feeding block
+              </button>
+            </form>
+          </div>
+          <div
+            class="MuiBox-root css-0"
+          >
+            <h5
+              class="MuiTypography-root MuiTypography-h5 css-1d8if93-MuiTypography-root"
+            >
+              September 2025
+            </h5>
+            <div
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiTableContainer-root css-15yen68-MuiPaper-root-MuiTableContainer-root"
+              style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+            >
+              <table
+                class="MuiTable-root css-1pe3nxw-MuiTable-root"
+              >
+                <thead
+                  class="MuiTableHead-root css-1a7iywq-MuiTableHead-root"
+                >
+                  <tr
+                    class="MuiTableRow-root MuiTableRow-head css-i4t7hi-MuiTableRow-root"
+                  >
+                    <th
+                      class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall css-t11akt-MuiTableCell-root"
+                      scope="col"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body2 css-u7wczt-MuiTypography-root"
+                      >
+                        Day
+                      </p>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  class="MuiTableBody-root css-gmh7jj-MuiTableBody-root"
+                >
+                  <tr
+                    class="MuiTableRow-root css-i4t7hi-MuiTableRow-root"
+                  >
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter MuiTableCell-sizeSmall css-10ly8ru-MuiTableCell-root"
+                      colspan="1"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-t9dfj5-MuiTypography-root"
+                      >
+                        Your baby is sleeping through the night!
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,75 @@
+.calendar-container {
+  padding: 1rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+}
+
+.calendar-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border: 1px solid #e5e7eb;
+}
+
+.calendar-table th,
+.calendar-table td {
+  border-right: 1px solid #e5e7eb;
+  padding: 0;
+  height: 4rem;
+}
+
+.calendar-table tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.calendar-table tr:last-child {
+  border-bottom: none;
+}
+
+.calendar-table th:last-child,
+.calendar-table td:last-child {
+  border-right: none;
+}
+
+.calendar-table th {
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.cell-content {
+  height: 100%;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.header-content {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.eliminating {
+  background-color: #dbeae8;
+}
+
+.data-content {
+  font-size: 1.125rem;
+}
+
+svg {
+  cursor: pointer;
+}
+
+/* TODO: Rename this class; not being truncated! */
+.truncate {
+  white-space: normal;
+  font-size: 12px;
+  overflow: visible;
+  background-color: white;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

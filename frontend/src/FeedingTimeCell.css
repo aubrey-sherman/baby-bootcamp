@@ -1,0 +1,39 @@
+.time-cell-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.directions {
+  font-size: 12px;
+}
+
+.time-header {
+  color: #FF0032;
+  font-size: 1rem;
+}
+
+.time-selectors {
+  display: flex;
+  font-size: 10px;
+  align-items: center;
+  gap: 1px;
+}
+
+.time-select {
+  padding: 0px;
+  width: 40px;
+  text-align: center;
+  border: 1px solid #e1e1e1;
+  background: white;
+}
+
+.submit-button {
+  background: #4195ff;
+  font-size: 12px;
+  color: white;
+  border: none;
+  padding: 1px 2px;
+  cursor: pointer;
+}
