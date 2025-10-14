@@ -324,7 +324,7 @@ export class FeedingEntry {
    *
    * Sets elimination start date and baseline when first volume is set
    * Updates all entries in first 3-day group with that volume
-   * For subsequent updates, uses BlockElimination logic
+   * For subsequent updates, uses BlockElimination logic.
    * Returns updated block with current week's entries
    *
    * Throws NotFoundError if entry not found.

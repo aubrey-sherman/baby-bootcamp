@@ -21,7 +21,7 @@ function authenticateJWT(
     try {
       res.locals.user = jwt.verify(token, SECRET_KEY);
     } catch (err) {
-      /* ignore invalid tokens (but don't store user!) */
+      /* ignore invalid tokens, but don't store user */
     }
   }
   return next();
