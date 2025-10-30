@@ -1,5 +1,5 @@
 
-import { eq, and, sql, gt, gte, lt, inArray } from 'drizzle-orm';
+import { eq, and, sql, gt, gte, lt } from 'drizzle-orm';
 import { DateTime } from 'luxon';
 import { db } from '../db.js'
 import { feedingBlocks } from '../schema/feedingBlocks.js';
@@ -58,7 +58,7 @@ export class FeedingBlock {
   }: {
     username: string;
     isEliminating?: boolean;
-  }): Promise<FeedingBlock> {
+  }): Promise<FeedingBlockType> {
     try {
       // First get the max number for this user
       const maxResult = await db
@@ -152,7 +152,7 @@ export class FeedingBlock {
    * Gets all feeding blocks for a user.
    * These do not include associated entries.
    */
-  static async getAllByUsername(username: string): Promise<FeedingBlock[]> {
+  static async getAllByUsername(username: string): Promise<FeedingBlockType[]> {
     const blocks = await db
       .select()
       .from(feedingBlocks)
@@ -166,7 +166,7 @@ export class FeedingBlock {
    * Returns null if a block doesn't exist or belongs to a different user.
    * // FIXME: change return to BadRequest or UnAuthorized Error for above
   */
-  static async getOne(id: string, username: string): Promise<FeedingBlock | null> {
+  static async getOne(id: string, username: string): Promise<FeedingBlockType | null> {
     const block = await db
       .select()
       .from(feedingBlocks)
@@ -227,7 +227,7 @@ export class FeedingBlock {
     username: string,
     weekStart: Date,
     weekEnd: Date
-  ): Promise<FeedingBlock[]> {
+  ): Promise<Partial<FeedingBlockType>[]> {
     // Get blocks that have any entries within the week range
     const blocks = await db
       .select({
@@ -255,6 +255,8 @@ export class FeedingBlock {
   }
 
   /** Updates feeding time for all entries in a block.
+   * For eliminating blocks, volumes are recalculated on-the-fly (not stored).
+   * For non-eliminating blocks, volumes remain as stored.
    *
    * Returns a block with updated entries.
    * Throws NotFoundError if block is not found.
@@ -293,7 +295,7 @@ export class FeedingBlock {
       const newSecond = selectedDate.second;
       const newMillisecond = selectedDate.millisecond;
 
-      // Update entries
+      // Update entry times (volumes will be calculated on-the-fly for eliminating blocks)
       for (const entry of entries) {
         const entryDate = DateTime.fromJSDate(entry.feedingTime);
         const updatedDateTime = entryDate.set({
@@ -303,20 +305,10 @@ export class FeedingBlock {
           millisecond: newMillisecond
         });
 
-        let updatedVolume = entry.volumeInOunces;
-        if (block.isEliminating) {
-          updatedVolume = await BlockElimination.calculateVolumeForTimeChange(
-            entry,
-            block,
-            updatedDateTime.toJSDate()
-          );
-        }
-
         await tx
           .update(feedingEntries)
           .set({
-            feedingTime: updatedDateTime.toJSDate(),
-            volumeInOunces: updatedVolume
+            feedingTime: updatedDateTime.toJSDate()
           })
           .where(eq(feedingEntries.id, entry.id));
       }
@@ -336,9 +328,17 @@ export class FeedingBlock {
           )
         );
 
+      // Calculate volumes on-the-fly for eliminating blocks
+      const entriesWithVolumes = block.isEliminating
+        ? thisWeeksEntries.map(entry => ({
+            ...entry,
+            volumeInOunces: BlockElimination.calculateVolume(entry, block) ?? entry.volumeInOunces
+          }))
+        : thisWeeksEntries;
+
       return {
         ...block,
-        feedingEntries: thisWeeksEntries
+        feedingEntries: entriesWithVolumes
       };
     });
   }
@@ -354,7 +354,7 @@ export class FeedingBlock {
     baselineVolume: number,
     weekStart: Date,
     weekEnd: Date
-  ): Promise<FeedingBlock> {
+  ): Promise<FeedingBlockType & { feedingEntries: FeedingEntryType[] }> {
     const [updatedBlock] = await db
       .update(feedingBlocks)
       .set({
@@ -390,7 +390,7 @@ export class FeedingBlock {
     id: string,
     username: string,
     isEliminating: boolean
-  ): Promise<FeedingBlock> {
+  ): Promise<FeedingBlockType> {
     try {
       const [updatedBlock] = await db
         .update(feedingBlocks)
@@ -414,20 +414,6 @@ export class FeedingBlock {
     }
   }
 
-  /** Updates baseline for decrementing feeding volume when eliminating. */
-  static async updateBaseline(
-    blockId: string,
-    newBaseline: number,
-    currentGroup: number
-  ): Promise<void> {
-    await db
-      .update(feedingBlocks)
-      .set({
-        baselineVolume: newBaseline,
-        currentGroup: currentGroup
-      })
-      .where(eq(feedingBlocks.id, blockId));
-  }
 
   /** Deletes a feeding block and decrements the numbers of all blocks that had higher numbers. */
   // TODO: rename function to deleteAndReorderBlocks for clarity
